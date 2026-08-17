@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque I — Principios de Inteligencia Artificial | UNE</title>
+<style>
+:root{
+  --azul:#20276b; --azul2:#2b3a8c; --rojo:#e2231a;
+  --gris:#f4f5f9; --gris2:#e6e8f0; --texto:#1c2230;
+  --suave:#5a6275; --blanco:#ffffff; --sombra:0 4px 18px rgba(32,39,107,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--gris);color:var(--texto);line-height:1.7;font-size:17px}
+.layout{display:flex;max-width:1300px;margin:0 auto}
+nav.sidebar{width:290px;background:var(--azul);color:#fff;min-height:100vh;padding:26px 18px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto}
+nav.sidebar .logo-box{background:#fff;border-radius:14px;padding:16px;text-align:center;margin-bottom:20px}
+nav.sidebar .logo-box img{width:120px;height:auto}
+nav.sidebar h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#aeb6e0;margin:20px 0 8px;border-bottom:1px solid #3a4494;padding-bottom:6px}
+nav.sidebar a{display:block;color:#dce0f4;text-decoration:none;padding:7px 12px;border-radius:8px;font-size:14.5px;margin-bottom:2px;transition:background .2s,color .2s}
+nav.sidebar a:hover{background:var(--azul2);color:#fff}
+nav.sidebar a.principal{font-weight:600;color:#fff}
+main{flex:1;background:var(--gris);min-width:0}
+header.hero{background:linear-gradient(135deg,var(--azul) 0%,var(--azul2) 60%,#3a47a0 100%);color:#fff;padding:46px 48px 40px}
+header.hero .kicker{display:inline-block;background:var(--rojo);color:#fff;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+header.hero h1{font-size:33px;line-height:1.25;margin-bottom:12px;font-weight:700}
+header.hero p{font-size:18px;color:#d5daf2;max-width:780px}
+header.hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px}
+header.hero .meta span{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:7px 16px;border-radius:8px;font-size:14px}
+.contenido{padding:38px 48px 70px}
+.sem-header{background:linear-gradient(135deg,#2b3a8c,#3a47a0);color:#fff;border-radius:16px;padding:26px 32px;margin:14px 0 26px;box-shadow:var(--sombra)}
+.sem-header .tag{display:inline-block;background:var(--rojo);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 13px;border-radius:16px;margin-bottom:10px}
+.sem-header h2{font-size:27px;margin-bottom:6px}
+.sem-header p{color:#d5daf2;font-size:16px;max-width:760px}
+section.card{background:#fff;border-radius:16px;padding:30px 34px;margin-bottom:26px;box-shadow:var(--sombra);scroll-margin-top:16px}
+section.card h3{color:var(--azul);font-size:22px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+section.card h3 .ico{background:var(--azul);color:#fff;width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-weight:700}
+section.card h4{color:var(--azul2);font-size:18px;margin:20px 0 8px}
+section.card h5{color:var(--rojo);font-size:15px;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+section.card p{margin-bottom:13px}
+section.card ul,section.card ol{margin:10px 0 15px 26px}
+section.card li{margin-bottom:7px}
+.subt{color:var(--suave);font-size:14px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:18px}
+.dato{border-left:4px solid var(--rojo);background:var(--gris);padding:15px 20px;border-radius:0 10px 10px 0;margin:16px 0}
+.dato strong{color:var(--azul)}
+.definicion{background:#eef0fb;border:1px solid var(--gris2);border-radius:12px;padding:18px 22px;margin:16px 0}
+.definicion .fuente{font-size:14px;color:var(--suave);font-style:italic;margin-top:6px}
+table.t{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+table.t th,table.t td{border:1px solid var(--gris2);padding:11px 14px;text-align:left;vertical-align:top}
+table.t th{background:var(--azul);color:#fff;font-weight:600}
+table.t tr:nth-child(even){background:var(--gris)}
+.timeline{position:relative;margin:22px 0 8px;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;background:var(--gris2)}
+.timeline .item{position:relative;margin-bottom:18px}
+.timeline .item::before{content:"";position:absolute;left:-24px;top:5px;width:13px;height:13px;border-radius:50%;background:var(--rojo);border:3px solid #fff;box-shadow:0 0 0 2px var(--rojo)}
+.timeline .item .anio{font-weight:700;color:var(--azul)}
+.pregunta-previa{background:linear-gradient(135deg,#fff4f3,#fdeceb);border:1px solid #f6cdca;border-radius:12px;padding:20px 24px;margin:6px 0}
+.pregunta-previa h5{color:var(--rojo);margin-top:0}
+.pregunta-previa textarea,.actividad textarea{width:100%;min-height:78px;margin-top:10px;padding:12px;border:1px solid var(--gris2);border-radius:8px;font-family:inherit;font-size:15px;resize:vertical}
+.actividad{border:2px solid var(--gris2);border-radius:14px;padding:24px 26px;margin:20px 0;background:#fff}
+.actividad .etiqueta{display:inline-block;background:var(--azul);color:#fff;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:12px}
+.actividad.foro{border-color:#c9d0f0}
+.actividad.aplicada{border-color:#c9e6d0}
+.actividad.aplicada .etiqueta{background:#1f7a44}
+.actividad.caso{border-color:#f0dcc9}
+.actividad.caso .etiqueta{background:#c9721f}
+.actividad h4{margin-top:2px;color:var(--azul)}
+.pasos{counter-reset:paso;list-style:none;margin-left:0}
+.pasos li{counter-increment:paso;position:relative;padding-left:42px;margin-bottom:13px}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:0;width:29px;height:29px;background:var(--rojo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.ejemplo{background:var(--gris);border-left:4px solid var(--azul2);padding:13px 18px;border-radius:0 8px 8px 0;margin:11px 0;font-size:15px}
+.ejemplo strong{color:var(--azul)}
+.entrega{background:#eef0fb;border-radius:8px;padding:11px 16px;margin-top:12px;font-size:14px;color:var(--azul)}
+.pregunta-quiz{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--gris2)}
+.pregunta-quiz:last-of-type{border-bottom:none}
+.pregunta-quiz p.enunciado{font-weight:600;color:var(--azul);margin-bottom:11px;font-size:16px}
+.opcion{display:block;padding:11px 16px;border:2px solid var(--gris2);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all .15s;font-size:15px}
+.opcion:hover{border-color:var(--azul2);background:var(--gris)}
+.opcion.sel{border-color:var(--azul);background:#eef0fb}
+.opcion.correcta{border-color:#1f7a44;background:#e6f5ec}
+.opcion.incorrecta{border-color:var(--rojo);background:#fdecea}
+.btn{background:var(--rojo);color:#fff;border:none;padding:13px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;font-family:inherit}
+.btn:hover{background:#c01c14}
+.btn.sec{background:var(--azul)}
+.btn.sec:hover{background:var(--azul2)}
+.resultado{margin-top:20px;padding:20px;border-radius:12px;text-align:center;font-size:19px;font-weight:700;display:none}
+.resultado.ok{background:#e6f5ec;color:#1f7a44;border:2px solid #1f7a44}
+.resultado.medio{background:#fff6e6;color:#b8791a;border:2px solid #d99b2b}
+.resultado.bajo{background:#fdecea;color:var(--rojo);border:2px solid var(--rojo)}
+.reflexion{background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;border-radius:16px;padding:30px 34px;margin-bottom:26px}
+.reflexion h3{color:#fff}
+.reflexion h3 .ico{background:var(--rojo)}
+.reflexion textarea{width:100%;min-height:80px;margin:8px 0 14px;padding:13px;border:none;border-radius:10px;font-family:inherit;font-size:15px;resize:vertical}
+.reflexion label{display:block;font-weight:600;margin-top:10px;color:#dce0f4}
+.recursos li{margin-bottom:11px}
+.recursos a{color:var(--azul2);text-decoration:none;font-weight:600}
+.recursos a:hover{text-decoration:underline}
+.recursos .tipo{display:inline-block;background:var(--gris2);color:var(--suave);font-size:12px;padding:2px 10px;border-radius:12px;margin-right:8px;font-weight:600;text-transform:uppercase}
+.aviso{font-size:13px;color:var(--suave);margin-top:6px;font-style:italic}
+footer.pie{background:var(--azul);color:#c5cbe8;text-align:center;padding:30px 20px;font-size:14px}
+footer.pie img{width:80px;margin-bottom:12px;background:#fff;padding:8px;border-radius:10px}
+footer.pie strong{color:#fff;display:block;margin-bottom:4px}
+.divisor{height:3px;background:linear-gradient(90deg,var(--rojo),var(--azul));border-radius:2px;margin:44px 0 8px;opacity:.5}
+@media(max-width:900px){
+  .layout{flex-direction:column}
+  nav.sidebar{width:100%;height:auto;min-height:auto;position:static}
+  header.hero{padding:32px 24px}
+  header.hero h1{font-size:26px}
+  .contenido{padding:24px 18px 50px}
+  section.card{padding:22px 20px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="logo-box"><img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="Logo UNE"></div>
+  <a class="principal" href="#inicio">Inicio del bloque</a>
+  <h2>Semana 1 · Historia de la IA</h2>
+  <a href="#s1">Introducción</a>
+  <a href="#s1-contenido">Contenido temático</a>
+  <a href="#s1-recursos">Materiales de consulta</a>
+  <a href="#s1-previa">Conocimiento previo</a>
+  <a href="#s1-foro">Foro de mediación</a>
+  <a href="#s1-aplicada">Actividad aplicada</a>
+  <a href="#s1-caso">Caso práctico</a>
+  <a href="#s1-quiz">Quiz</a>
+  <a href="#s1-reflexion">Reflexión</a>
+  <h2>Semana 2 · Subcampos y técnicas</h2>
+  <a href="#s2">Introducción</a>
+  <a href="#s2-contenido">Contenido temático</a>
+  <a href="#s2-recursos">Materiales de consulta</a>
+  <a href="#s2-previa">Conocimiento previo</a>
+  <a href="#s2-foro">Foro de mediación</a>
+  <a href="#s2-aplicada">Actividad aplicada</a>
+  <a href="#s2-caso">Caso práctico</a>
+  <a href="#s2-quiz">Quiz</a>
+  <a href="#s2-reflexion">Reflexión</a>
+  <h2>Semana 3 · Ética y sociedad</h2>
+  <a href="#s3">Introducción</a>
+  <a href="#s3-contenido">Contenido temático</a>
+  <a href="#s3-recursos">Materiales de consulta</a>
+  <a href="#s3-previa">Conocimiento previo</a>
+  <a href="#s3-foro">Foro de mediación</a>
+  <a href="#s3-aplicada">Actividad aplicada</a>
+  <a href="#s3-caso">Caso práctico</a>
+  <a href="#s3-quiz">Quiz</a>
+  <a href="#s3-reflexion">Reflexión</a>
+</nav>
+<main>
+<header class="hero" id="inicio">
+  <span class="kicker">Minicurso · Bloque I</span>
+  <h1>Principios de la Inteligencia Artificial</h1>
+  <p>Guía interactiva de aprendizaje para la formación en Ingeniería en Computación. Cada semana constituye una unidad completa con introducción, contenido temático, materiales de consulta, actividades para Google Classroom y una sección de reflexión y aplicación.</p>
+  <div class="meta">
+    <span>Licenciatura en Ingeniería en Computación</span>
+    <span>5.º semestre · Fundamentos de IA</span>
+    <span>Semanas 1 a 3 · 12 horas</span>
+    <span>Universidad de Especialidades UNE — Plantel Centro</span>
+  </div>
+</header>
+<div class="contenido">
+<!-- ================= SEMANA 1 ================= -->
+<div class="sem-header" id="s1">
+  <span class="tag">Semana 1</span>
+  <h2>Introducción e historia de la Inteligencia Artificial</h2>
+  <p>Concepto y definiciones de IA, los cuatro enfoques según Russell y Norvig, hitos históricos, inviernos de la IA y el Test de Turing.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">Por qué comenzar por los fundamentos</p>
+  <p>Antes de programar agentes o entrenar modelos, es indispensable comprender <strong>qué es la Inteligencia Artificial, de dónde proviene y cómo se define</strong>. Esta primera semana construye la base conceptual e histórica sobre la que se apoya todo el curso.</p>
+  <p>La guía sigue un enfoque <strong>constructivista y de aprendizaje basado en problemas (ABP)</strong>: usted no memorizará definiciones de forma pasiva, sino que construirá su conocimiento a partir de preguntas detonadoras, análisis de casos y aplicación directa en su contexto universitario.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Al concluir, usted podrá definir la IA desde distintos enfoques, distinguir el paradigma del agente racional y ubicar los principales hitos históricos de la disciplina, incluido el Test de Turing.</div>
+</section>
+
+<section class="card" id="s1-contenido">
+  <h3><span class="ico">1</span> Contenido temático</h3>
+  <p class="subt">Concepto, enfoques e historia</p>
+
+  <h4>¿Qué es la Inteligencia Artificial?</h4>
+  <p>No existe una única definición de IA. La referencia más consolidada en el ámbito académico es la obra de <strong>Stuart Russell y Peter Norvig</strong>, <em>Inteligencia Artificial: Un Enfoque Moderno</em>, texto base de este curso.</p>
+  <div class="definicion">"La Inteligencia Artificial es el estudio de los agentes que reciben percepciones del entorno y ejecutan acciones. Cada agente implementa una función que proyecta las secuencias de percepciones en las acciones."<div class="fuente">Russell, S. J. y Norvig, P. (2020). Inteligencia Artificial: Un Enfoque Moderno.</div></div>
+
+  <h4>Los cuatro enfoques de la IA</h4>
+  <p>Russell y Norvig organizan las definiciones según dos ejes: si el objetivo es replicar el <em>pensamiento</em> o la <em>conducta</em>, y si el estándar es el <em>desempeño humano</em> o la <em>racionalidad ideal</em>.</p>
+  <table class="t">
+    <tr><th></th><th>Como humanos</th><th>Racionalmente</th></tr>
+    <tr><td><strong>Pensar</strong></td><td>Pensar como humano: modelado cognitivo de los procesos mentales.</td><td>Pensar racionalmente: leyes del pensamiento, lógica formal e inferencia.</td></tr>
+    <tr><td><strong>Actuar</strong></td><td>Actuar como humano: enfoque del Test de Turing.</td><td>Actuar racionalmente: paradigma del agente racional. Enfoque dominante hoy.</td></tr>
+  </table>
+  <div class="dato"><strong>Enfoque actual.</strong> La IA moderna se orienta al <strong>agente racional</strong>: un sistema que percibe su entorno y actúa para maximizar sus posibilidades de alcanzar un objetivo. Este será el hilo conductor del curso.</div>
+
+  <h4>Historia de la IA</h4>
+  <p>La IA es resultado de más de setenta años de avances, con periodos de gran optimismo y otros de estancamiento, conocidos como <strong>inviernos de la IA</strong>, en los que la falta de resultados redujo el financiamiento.</p>
+  <div class="timeline">
+    <div class="item"><span class="anio">1950</span> — Alan Turing propone el Test de Turing como criterio operativo de inteligencia.</div>
+    <div class="item"><span class="anio">1956</span> — Conferencia de Dartmouth: John McCarthy acuña el término "Inteligencia Artificial".</div>
+    <div class="item"><span class="anio">1974–1980</span> — Primer invierno de la IA: los resultados no cumplen las promesas.</div>
+    <div class="item"><span class="anio">1980s</span> — Auge comercial de los sistemas expertos.</div>
+    <div class="item"><span class="anio">1997</span> — Deep Blue de IBM vence al campeón mundial de ajedrez.</div>
+    <div class="item"><span class="anio">2012</span> — AlexNet impulsa el aprendizaje profundo en visión artificial.</div>
+    <div class="item"><span class="anio">2016</span> — AlphaGo derrota al campeón mundial de Go.</div>
+    <div class="item"><span class="anio">2020s</span> — Auge de los modelos generativos y grandes modelos de lenguaje.</div>
+  </div>
+
+  <h4>El Test de Turing</h4>
+  <p>Si un evaluador humano conversa por texto con una máquina y con una persona sin poder distinguirlas, se dice que la máquina supera la prueba. Turing sustituyó la pregunta filosófica "¿pueden pensar las máquinas?" por una <strong>pregunta empírica sobre la conducta observable</strong>. La prueba evalúa la imitación de la conducta, no la comprensión real.</p>
+  <h5>Actividad en clase</h5>
+  <p>Construcción grupal de una línea de tiempo colaborativa (pizarrón, Miro o Jamboard) con los hitos clave de la IA. Cada estudiante aporta al menos un hito con año, descripción y justificación de su relevancia.</p>
+</section>
+
+<section class="card" id="s1-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.). Prentice Hall. ISBN 84-205-4003-X.</li>
+    <li><span class="tipo">Artículo</span> Turing, A. M. (1950). <em>Computing Machinery and Intelligence</em>. Mind, 59(236). <a href="https://academic.oup.com/mind/article/LIX/236/433/986238" target="_blank" rel="noopener">Consultar</a></li>
+    <li><span class="tipo">Sitio</span> Stanford University. <em>One Hundred Year Study on AI (AI100)</em>. <a href="https://ai100.stanford.edu/" target="_blank" rel="noopener">ai100.stanford.edu</a></li>
+    <li><span class="tipo">Libro</span> Ertel, W. y Black, N. T. (2018). <em>Introduction to Artificial Intelligence</em> (2.ª ed.). Springer. ISBN 978-3-319-58486-7.</li>
+  </ul>
+</section>
+
+<section class="card" id="s1-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras y sin consultar fuentes. Servirá para contrastar lo que sabe hoy con lo que aprenderá.</p>
+    <p><strong>Cuando escucha "Inteligencia Artificial", ¿qué entiende? ¿Una calculadora, un buscador web o un videojuego contienen IA? Justifique.</strong></p>
+    <textarea id="prev1" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev1','av1')">Guardar mi respuesta</button>
+    <p class="aviso" id="av1"></p>
+  </div>
+</section>
+
+<section class="card" id="s1-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>Reflexión crítica: ¿inteligencia o imitación?</h4>
+    <p><strong>Pregunta detonadora:</strong> Un modelo de lenguaje actual sostiene conversaciones fluidas y redacta textos. ¿Significa esto que "piensa" o "comprende"? ¿El Test de Turing sigue siendo un criterio válido de inteligencia hoy? Argumente.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 1 — ¿Inteligencia o imitación?" en Classroom.</li>
+      <li>Publique una aportación inicial de 150 a 250 palabras fundamentada en un concepto de la guía (enfoques, Test de Turing o agente racional).</li>
+      <li>Responda de forma argumentada a por lo menos dos compañeros, aportando un matiz, contraejemplo o fuente.</li>
+      <li>Cierre indicando si su postura cambió tras leer a los demás y por qué.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "Superar el Test de Turing demuestra imitación de la conducta, no comprensión. Desde el enfoque del agente racional, un modelo optimiza una función objetivo a partir de datos, sin representación de significado. No obstante, si el criterio es puramente conductual, el límite entre imitar y comprender se vuelve difuso..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia: captura o enlace de sus participaciones.</div>
+  </div>
+</section>
+
+<section class="card" id="s1-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Aprendizaje aplicado</span>
+    <h4>Mapa de la IA en mi entorno universitario</h4>
+    <p>Objetivo: conectar los conceptos de la semana con su realidad como estudiante, generando un aprendizaje significativo y aplicable.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Identifique cinco herramientas o sistemas con IA que usted, sus profesores o su universidad usen (correctores, recomendadores, asistentes de programación, detectores de plagio, buscadores).</li>
+      <li>Para cada uno elabore una ficha: nombre, subcampo de IA y problema que resuelve.</li>
+      <li>Clasifique cada herramienta por enfoque: ¿actúa como humano o racionalmente?</li>
+      <li>Redacte una conclusión: ¿cómo cambia su forma de estudiar saber qué hay "detrás" de estas herramientas?</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo de ficha:</strong> "Asistente de autocompletado de código. Subcampo: PLN aplicado a código. Problema: sugerir la siguiente línea a partir del contexto. Enfoque: actuar racionalmente."</div>
+    <div class="entrega"><strong>Entrega:</strong> Documento o presentación con las cinco fichas y la conclusión, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s1-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>La promesa incumplida</h4>
+    <div class="ejemplo"><strong>Caso.</strong> En los años ochenta, una empresa invierte grandes sumas en un sistema experto para diagnóstico. Al inicio impresiona, pero al enfrentar situaciones no previstas en sus reglas comienza a fallar; el mantenimiento se vuelve inviable y el proyecto se abandona, contribuyendo a un invierno de la IA.</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>¿Por qué un sistema basado en reglas fijas puede fallar ante situaciones nuevas? Relacione con las limitaciones de la IA de esa época.</li>
+      <li>¿Qué relación tiene este caso con el concepto de "invierno de la IA"?</li>
+      <li>¿Qué enfoque de IA (de los cuatro vistos) predominaba en estos sistemas?</li>
+      <li>¿Qué lección extrae para gestionar hoy las expectativas sobre la IA?</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con el análisis de las cuatro preguntas (1 a 2 cuartillas), subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s1-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 1</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz1"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(1)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(1)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res1"></div>
+</section>
+
+<section class="reflexion" id="s1-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Semana 1</h3>
+  <p>Planifique cómo incorporará lo aprendido en su vida académica y profesional. Sus respuestas se guardan en este dispositivo.</p>
+  <label>1. ¿Qué idea de esta semana cambió o amplió lo que pensaba sobre la IA?</label>
+  <textarea id="r1a"></textarea>
+  <label>2. ¿Cómo aplicará el concepto de agente racional en sus otras materias o proyectos?</label>
+  <textarea id="r1b"></textarea>
+  <button class="btn" onclick="guardarRef(['r1a','r1b'],'avr1')">Guardar mi plan</button>
+  <p class="aviso" id="avr1" style="color:#dce0f4"></p>
+</section>
+
+<div class="divisor"></div>
+<!-- ================= SEMANA 2 ================= -->
+<div class="sem-header" id="s2">
+  <span class="tag">Semana 2</span>
+  <h2>Subcampos, técnicas y entornos de aplicación</h2>
+  <p>Procesamiento de lenguaje natural, reconocimiento de patrones, visión artificial, robótica, sistemas expertos, lógica difusa, algoritmos genéticos y panorama de la industria.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">De la definición a las aplicaciones</p>
+  <p>Una vez comprendido qué es la IA, esta semana identificamos <strong>sus principales subcampos y técnicas</strong>, y cómo se aplican en la industria. La IA no es un campo homogéneo, sino un conjunto de especialidades que resuelven distintos tipos de problemas.</p>
+  <p>Bajo el enfoque de ABP, el objetivo es que usted aprenda a <strong>reconocer qué técnica corresponde a cada problema real</strong>, una habilidad esencial para cualquier ingeniero en computación que diseñe soluciones inteligentes.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Distinguir los subcampos de la IA, comprender las técnicas clásicas (sistemas expertos, lógica difusa, algoritmos genéticos) y ubicar su presencia en la industria actual.</div>
+</section>
+
+<section class="card" id="s2-contenido">
+  <h3><span class="ico">2</span> Contenido temático</h3>
+  <p class="subt">Subcampos, técnicas y panorama</p>
+
+  <h4>Subcampos de la IA</h4>
+  <table class="t">
+    <tr><th>Subcampo</th><th>Qué hace</th><th>Aplicaciones</th></tr>
+    <tr><td>Procesamiento de Lenguaje Natural (PLN)</td><td>Comprender, interpretar y generar lenguaje humano.</td><td>Traductores, asistentes de voz, análisis de sentimientos, chatbots.</td></tr>
+    <tr><td>Reconocimiento de patrones</td><td>Identificar regularidades en los datos para clasificar o predecir.</td><td>Detección de fraude, reconocimiento de escritura, recomendaciones.</td></tr>
+    <tr><td>Visión artificial</td><td>Interpretar imágenes y video.</td><td>Diagnóstico por imagen, control de calidad, vehículos autónomos.</td></tr>
+    <tr><td>Robótica</td><td>Integrar percepción, razonamiento y acción física.</td><td>Robots industriales, quirúrgicos y de servicio.</td></tr>
+  </table>
+
+  <h4>Técnicas clásicas</h4>
+  <h5>Sistemas expertos</h5>
+  <p>Emulan la toma de decisiones de un especialista mediante una base de conocimiento y un motor de inferencia con reglas "si... entonces...". Fueron el gran producto comercial de la IA en los años ochenta.</p>
+  <h5>Lógica difusa (Fuzzy logic)</h5>
+  <p>Permite razonar con grados de verdad en lugar de valores estrictamente verdadero o falso. Modela conceptos imprecisos como "caliente" o "cerca". Se usa en electrodomésticos y control industrial.</p>
+  <h5>Algoritmos genéticos</h5>
+  <p>Técnicas de optimización inspiradas en la evolución: selección, cruce y mutación de soluciones candidatas. Se aplican en diseño de ingeniería, logística y optimización de rutas.</p>
+
+  <div class="dato"><strong>Panorama de la industria.</strong> La IA está presente en salud, finanzas, manufactura, transporte, educación y entretenimiento. Como futuros ingenieros, ustedes diseñarán, implementarán y evaluarán estas soluciones.</div>
+  <h5>Actividad en clase</h5>
+  <p>Análisis de casos por equipos: a cada equipo se le asigna un entorno de aplicación e investiga un caso real de la industria, presentando el problema, la técnica utilizada y el beneficio obtenido.</p>
+</section>
+
+<section class="card" id="s2-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.). Prentice Hall.</li>
+    <li><span class="tipo">Libro</span> Deshpande, A. y Kumar, M. (2018). <em>Artificial Intelligence for Big Data</em>. Packt. ISBN 978-1-78847-217-3.</li>
+    <li><span class="tipo">Comunidad</span> Kaggle. <em>Your Machine Learning and Data Science Community</em>. <a href="https://www.kaggle.com/" target="_blank" rel="noopener">kaggle.com</a></li>
+    <li><span class="tipo">Sitio</span> Stanford. <em>AI Index Report</em> (panorama anual de la IA en la industria). <a href="https://aiindex.stanford.edu/report/" target="_blank" rel="noopener">aiindex.stanford.edu</a></li>
+  </ul>
+</section>
+
+<section class="card" id="s2-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras antes de estudiar el contenido.</p>
+    <p><strong>Un traductor automático, un filtro antispam y un robot de fábrica, ¿usan el mismo tipo de IA? ¿Qué cree que los diferencia técnicamente?</strong></p>
+    <textarea id="prev2" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev2','av2')">Guardar mi respuesta</button>
+    <p class="aviso" id="av2"></p>
+  </div>
+</section>
+
+<section class="card" id="s2-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>¿Qué subcampo transformará más la ingeniería?</h4>
+    <p><strong>Pregunta detonadora:</strong> De los subcampos vistos (PLN, visión artificial, reconocimiento de patrones, robótica), ¿cuál considera que tendrá mayor impacto en el ejercicio de la ingeniería en computación en los próximos cinco años? Argumente con evidencia.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 2 — Impacto de los subcampos" en Classroom.</li>
+      <li>Publique una aportación de 150 a 250 palabras eligiendo un subcampo y justificando con al menos un ejemplo real.</li>
+      <li>Responda a dos compañeros que hayan elegido un subcampo distinto, señalando coincidencias o discrepancias.</li>
+      <li>Concluya con una síntesis de lo aprendido del intercambio.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "Considero que el PLN tendrá el mayor impacto, pues los asistentes de programación basados en lenguaje ya modifican la forma de escribir código. Un desarrollador que domine estas herramientas incrementará su productividad, aunque deberá conservar el criterio para validar las sugerencias..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia en Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s2-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Aprendizaje aplicado</span>
+    <h4>Ficha técnica de una solución de IA</h4>
+    <p>Objetivo: aplicar la clasificación de subcampos y técnicas a un producto real, generando conocimiento útil para su formación.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Elija un producto o servicio de IA que utilice en su vida universitaria o cotidiana.</li>
+      <li>Elabore una ficha técnica: subcampo, técnica probable (sistema experto, reconocimiento de patrones, etc.), datos que necesita y problema que resuelve.</li>
+      <li>Proponga una mejora o una nueva función que podría añadirse a esa solución.</li>
+      <li>Explique cómo aplicaría este análisis al diseñar un proyecto en otra de sus materias.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "Plataforma de recomendación de cursos. Subcampo: reconocimiento de patrones. Técnica: filtrado basado en comportamiento. Datos: historial de cursos y calificaciones. Mejora propuesta: incorporar retroalimentación explícita del estudiante."</div>
+    <div class="entrega"><strong>Entrega:</strong> Ficha técnica con la mejora propuesta, subida a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s2-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>El control inteligente de un invernadero</h4>
+    <div class="ejemplo"><strong>Caso.</strong> Una empresa agrícola desea automatizar un invernadero: regular temperatura, humedad y riego. Las condiciones no son exactas ("hace algo de calor", "el suelo está casi seco"). Además, quiere que el sistema optimice el consumo de agua y energía a lo largo del tiempo.</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>¿Qué técnica resulta más adecuada para manejar condiciones imprecisas como "algo de calor"? Justifique.</li>
+      <li>¿Qué técnica emplearía para optimizar el consumo de agua y energía? Explique por qué.</li>
+      <li>¿Podría combinarse más de un subcampo o técnica? Proponga una arquitectura general.</li>
+      <li>¿Qué datos necesitaría recolectar el sistema para funcionar correctamente?</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con el análisis de las cuatro preguntas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s2-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 2</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz2"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(2)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(2)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res2"></div>
+</section>
+
+<section class="reflexion" id="s2-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Semana 2</h3>
+  <p>Planifique cómo incorporará lo aprendido. Sus respuestas se guardan en este dispositivo.</p>
+  <label>1. ¿Qué subcampo o técnica le resultó más relevante para su formación y por qué?</label>
+  <textarea id="r2a"></textarea>
+  <label>2. ¿En qué proyecto o materia podría aplicar la clasificación de técnicas de IA que aprendió?</label>
+  <textarea id="r2b"></textarea>
+  <button class="btn" onclick="guardarRef(['r2a','r2b'],'avr2')">Guardar mi plan</button>
+  <p class="aviso" id="avr2" style="color:#dce0f4"></p>
+</section>
+
+<div class="divisor"></div>
+<!-- ================= SEMANA 3 ================= -->
+<div class="sem-header" id="s3">
+  <span class="tag">Semana 3</span>
+  <h2>Implicaciones éticas y sociales de la IA</h2>
+  <p>Sesgos algorítmicos, privacidad, automatización y empleo, principios de IA responsable y el cierre integrador del bloque.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">La dimensión ética de la ingeniería</p>
+  <p>El poder de la IA conlleva responsabilidades. Un ingeniero en computación no solo debe preguntarse si un sistema <strong>funciona</strong>, sino si es <strong>justo, transparente y respetuoso de los derechos de las personas</strong>. Esta semana cierra el bloque con su dimensión más humana.</p>
+  <p>Desde el ABP, analizará dilemas reales para comprender que las decisiones técnicas tienen consecuencias sociales, y que la ética no es un obstáculo para la innovación, sino una condición para que esta sea confiable y sostenible.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Identificar sesgos y riesgos de privacidad, comprender el impacto de la automatización en el empleo y argumentar con base en los principios de la IA responsable.</div>
+</section>
+
+<section class="card" id="s3-contenido">
+  <h3><span class="ico">3</span> Contenido temático</h3>
+  <p class="subt">Ética, sesgos e IA responsable</p>
+
+  <h4>Sesgos algorítmicos</h4>
+  <p>Los sistemas de IA aprenden de datos históricos. Si esos datos contienen prejuicios, el sistema los reproduce y amplifica. Se han documentado sesgos en procesos de contratación, concesión de créditos y sistemas de justicia.</p>
+
+  <h4>Privacidad</h4>
+  <p>Muchos sistemas requieren grandes volúmenes de datos personales, lo que plantea preguntas sobre consentimiento, resguardo y uso legítimo de la información. El reconocimiento facial masivo es un caso especialmente debatido.</p>
+
+  <h4>Automatización y empleo</h4>
+  <p>La automatización transforma el mercado laboral: elimina ciertas tareas, crea otras nuevas y exige nuevas competencias. El debate no es solo técnico, sino social y económico.</p>
+
+  <h4>IA responsable</h4>
+  <p>Conjunto de principios para el desarrollo ético de la IA:</p>
+  <ul>
+    <li><strong>Transparencia:</strong> poder explicar cómo decide un sistema.</li>
+    <li><strong>Equidad:</strong> evitar discriminación hacia personas o grupos.</li>
+    <li><strong>Rendición de cuentas:</strong> que exista un responsable identificable.</li>
+    <li><strong>Privacidad:</strong> proteger los datos de las personas.</li>
+    <li><strong>Supervisión humana:</strong> mantener el control último en manos de personas.</li>
+  </ul>
+  <div class="dato"><strong>Principio profesional.</strong> "Que algo pueda hacerse no significa que deba hacerse." La ética es una condición para que la innovación sea sostenible y confiable.</div>
+  <h5>Actividad en clase</h5>
+  <p>Debate estructurado sobre un dilema ético real, por ejemplo, la programación de decisiones en vehículos autónomos ante un accidente inevitable. Se forman posturas, se argumenta con evidencia y se busca comprender la complejidad del problema más que "ganar".</p>
+</section>
+
+<section class="card" id="s3-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Marco</span> UNESCO (2021). <em>Recomendación sobre la Ética de la Inteligencia Artificial</em>. <a href="https://www.unesco.org/es/artificial-intelligence/recommendation-ethics" target="_blank" rel="noopener">Consultar</a></li>
+    <li><span class="tipo">Marco</span> OCDE. <em>Principios sobre Inteligencia Artificial</em>. <a href="https://oecd.ai/en/ai-principles" target="_blank" rel="noopener">oecd.ai</a></li>
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.), capítulo sobre ética.</li>
+    <li><span class="tipo">Sitio</span> Stanford. <em>AI100 Report</em>, sección de implicaciones sociales. <a href="https://ai100.stanford.edu/" target="_blank" rel="noopener">ai100.stanford.edu</a></li>
+  </ul>
+</section>
+
+<section class="card" id="s3-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras antes de estudiar el contenido.</p>
+    <p><strong>Si un sistema de IA toma una decisión injusta, ¿de quién es la responsabilidad: del programador, de la empresa, de los datos o del propio sistema? Justifique.</strong></p>
+    <textarea id="prev3" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev3','av3')">Guardar mi respuesta</button>
+    <p class="aviso" id="av3"></p>
+  </div>
+</section>
+
+<section class="card" id="s3-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>¿Automatizar sin límites?</h4>
+    <p><strong>Pregunta detonadora:</strong> Si una IA puede realizar una tarea mejor y más barato que una persona, ¿debería hacerlo siempre? ¿Qué factores éticos, sociales y profesionales deberían considerarse antes de automatizar? Argumente.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 3 — ¿Automatizar sin límites?" en Classroom.</li>
+      <li>Publique una aportación de 150 a 250 palabras que integre al menos un principio de la IA responsable.</li>
+      <li>Responda a dos compañeros, ampliando o cuestionando su postura con respeto.</li>
+      <li>Cierre proponiendo un criterio propio para decidir cuándo automatizar y cuándo no.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "La eficiencia no puede ser el único criterio. Bajo el principio de supervisión humana, automatizar decisiones sensibles, como un diagnóstico o un despido, exige mantener la responsabilidad en una persona. La pregunta no es solo si la IA puede, sino qué consecuencias sociales genera..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia en Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s3-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Aprendizaje aplicado</span>
+    <h4>Código de ética para mis proyectos</h4>
+    <p>Objetivo: transformar los principios de la IA responsable en compromisos concretos aplicables a su trabajo universitario.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Revise los cinco principios de la IA responsable presentados en el contenido.</li>
+      <li>Redacte un código de ética personal de cinco puntos para los proyectos de programación que desarrolla en la carrera.</li>
+      <li>Para cada punto, escriba una acción concreta que demuestre cómo lo cumpliría.</li>
+      <li>Explique cómo este código puede diferenciarlo como profesional en el mercado laboral.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo de punto:</strong> "Principio de transparencia. Compromiso: documentaré qué datos usa mi sistema y qué limitaciones tiene, de modo que cualquier usuario comprenda cómo y por qué toma sus decisiones."</div>
+    <div class="entrega"><strong>Entrega:</strong> Código de ética personal de cinco puntos con sus acciones, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s3-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>El sistema de admisión sesgado</h4>
+    <div class="ejemplo"><strong>Caso.</strong> Una universidad implementa una IA para preseleccionar aspirantes a partir del historial de admitidos de los últimos diez años. Tras un semestre, se detecta que rechaza sistemáticamente a aspirantes de ciertas escuelas y zonas, aun con calificaciones equivalentes. El equipo técnico afirma que "el algoritmo solo aprendió de los datos".</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>¿Cuál es el origen probable del comportamiento? Relacione con el concepto de sesgo algorítmico.</li>
+      <li>¿Es válida la afirmación de que "el algoritmo solo aprendió de los datos"? ¿Dónde queda la responsabilidad profesional?</li>
+      <li>Proponga al menos dos medidas concretas para detectar y corregir el sesgo.</li>
+      <li>Desde la IA responsable, ¿qué principios se vulneraron?</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con el análisis de las cuatro preguntas (1 a 2 cuartillas), subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s3-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 3</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz3"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(3)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(3)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res3"></div>
+</section>
+
+<section class="reflexion" id="s3-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Cierre del Bloque I</h3>
+  <p>Integre lo aprendido en las tres semanas y planifique su aplicación académica y profesional.</p>
+  <label>1. ¿Qué compromiso ético asume como futuro ingeniero frente al desarrollo de sistemas inteligentes?</label>
+  <textarea id="r3a"></textarea>
+  <label>2. Integrando las tres semanas, ¿cómo definiría hoy la Inteligencia Artificial con sus propias palabras?</label>
+  <textarea id="r3b"></textarea>
+  <label>3. ¿Qué acción concreta realizará este semestre para aplicar lo aprendido en su formación?</label>
+  <textarea id="r3c"></textarea>
+  <button class="btn" onclick="guardarRef(['r3a','r3b','r3c'],'avr3')">Guardar mi plan de aplicación</button>
+  <p class="aviso" id="avr3" style="color:#dce0f4"></p>
+</section>
+
+</div>
+<footer class="pie">
+  <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="Logo UNE">
+  <strong>Universidad de Especialidades UNE — Plantel Centro</strong>
+  Licenciatura en Ingeniería en Computación · Fundamentos de Inteligencia Artificial<br>
+  Bloque I — Principios de IA · Guía interactiva de aprendizaje
+</footer>
+</main>
+</div>
+<script>
+function guardar(id, avisoId){
+  try{ localStorage.setItem('une_ia_'+id, document.getElementById(id).value);
+    document.getElementById(avisoId).textContent = 'Respuesta guardada en este dispositivo.';
+  }catch(e){ document.getElementById(avisoId).textContent = 'No fue posible guardar en este navegador.'; }
+}
+function guardarRef(ids, avisoId){
+  try{ for(var i=0;i<ids.length;i++){ localStorage.setItem('une_ia_'+ids[i], document.getElementById(ids[i]).value); }
+    document.getElementById(avisoId).textContent = 'Su plan fue guardado en este dispositivo.';
+  }catch(e){ document.getElementById(avisoId).textContent = 'No fue posible guardar en este navegador.'; }
+}
+function cargarGuardado(){
+  var ids = ['prev1','prev2','prev3','r1a','r1b','r2a','r2b','r3a','r3b','r3c'];
+  try{ for(var i=0;i<ids.length;i++){
+    var v = localStorage.getItem('une_ia_'+ids[i]);
+    if(v && document.getElementById(ids[i])) document.getElementById(ids[i]).value = v;
+  } }catch(e){}
+}
+
+var quizzes = {
+  1: [
+    {q:'1. Según Russell y Norvig, ¿cuál es el enfoque dominante en la IA moderna?',
+     o:['Pensar como humano mediante modelado cognitivo','Actuar racionalmente mediante el paradigma del agente racional','Superar siempre el Test de Turing','Reproducir con exactitud el cerebro humano'], c:1},
+    {q:'2. El Test de Turing evalúa la inteligencia de una máquina con base en:',
+     o:['La cantidad de datos que procesa','Su comprensión profunda del lenguaje','Si su conducta es indistinguible de la de un humano en una conversación','Su velocidad de cálculo'], c:2},
+    {q:'3. Los "inviernos de la IA" se refieren a:',
+     o:['Periodos de estancamiento por falta de resultados y financiamiento','Épocas en que la IA se usó solo en climas fríos','Los años en que se prohibió investigar IA','Fallas de hardware por baja temperatura'], c:0},
+    {q:'4. ¿En qué año se acuñó el término "Inteligencia Artificial"?',
+     o:['1950, con el artículo de Turing','1956, en la Conferencia de Dartmouth','1997, con Deep Blue','2012, con AlexNet'], c:1},
+    {q:'5. El paradigma del agente racional define a un sistema que:',
+     o:['Imita todos los errores humanos','Percibe su entorno y actúa para alcanzar su objetivo de la mejor forma','Solo funciona con reglas fijas','Nunca requiere datos'], c:1}
+  ],
+  2: [
+    {q:'1. Un sistema que interpreta imágenes médicas para apoyar un diagnóstico pertenece a:',
+     o:['Lógica difusa','Visión artificial','Algoritmos genéticos','PLN'], c:1},
+    {q:'2. La técnica que razona con grados de verdad en lugar de valores estrictamente verdadero o falso es:',
+     o:['La lógica difusa','El reconocimiento de patrones','La robótica','El sistema experto'], c:0},
+    {q:'3. Los sistemas expertos toman decisiones mediante:',
+     o:['Redes neuronales profundas','Una base de conocimiento y reglas "si... entonces..."','Evolución de poblaciones','Procesamiento de imágenes'], c:1},
+    {q:'4. Los algoritmos genéticos se inspiran en:',
+     o:['El funcionamiento del oído humano','La evolución biológica: selección, cruce y mutación','La lógica proposicional','La mecánica de fluidos'], c:1},
+    {q:'5. Un traductor automático o un asistente de voz corresponden principalmente al subcampo de:',
+     o:['Visión artificial','Robótica','Procesamiento de Lenguaje Natural','Algoritmos genéticos'], c:2}
+  ],
+  3: [
+    {q:'1. Cuando un sistema de IA reproduce prejuicios presentes en sus datos, se habla de:',
+     o:['Sobreajuste de hardware','Un invierno de la IA','Sesgo algorítmico','Lógica difusa'], c:2},
+    {q:'2. El principio de IA responsable que exige poder explicar cómo decide un sistema es:',
+     o:['Transparencia','Velocidad','Escalabilidad','Compresión'], c:0},
+    {q:'3. La supervisión humana como principio ético significa que:',
+     o:['Los humanos deben programar en binario','El control último debe permanecer en manos de personas','La IA nunca debe usarse','Los datos no importan'], c:1},
+    {q:'4. Ante un sistema que discrimina, la afirmación "el algoritmo solo aprendió de los datos":',
+     o:['Exime completamente de responsabilidad al equipo','No exime de la responsabilidad profesional sobre los datos y su uso','Es siempre técnicamente imposible','Significa que el sistema es justo'], c:1},
+    {q:'5. El principio "que algo pueda hacerse no significa que deba hacerse" expresa que:',
+     o:['La ética condiciona la innovación tecnológica','La IA debe ser siempre más rápida','No debe documentarse el código','La eficiencia es el único criterio'], c:0}
+  ]
+};
+var seleccion = {1:{},2:{},3:{}};
+
+function construir(n){
+  var cont = document.getElementById('quiz'+n);
+  var preg = quizzes[n];
+  var html = '';
+  for(var i=0;i<preg.length;i++){
+    html += '<div class="pregunta-quiz">';
+    html += '<p class="enunciado">'+preg[i].q+'</p>';
+    for(var j=0;j<preg[i].o.length;j++){
+      html += '<div class="opcion" data-n="'+n+'" data-p="'+i+'" data-o="'+j+'">'+preg[i].o[j]+'</div>';
+    }
+    html += '</div>';
+  }
+  cont.innerHTML = html;
+  reattach();
+}
+function reattach(){
+  var ops = document.querySelectorAll('.opcion');
+  for(var k=0;k<ops.length;k++){
+    ops[k].onclick = function(){
+      var n = this.getAttribute('data-n');
+      var p = this.getAttribute('data-p');
+      var o = this.getAttribute('data-o');
+      var hermanas = document.querySelectorAll('.opcion[data-n="'+n+'"][data-p="'+p+'"]');
+      for(var m=0;m<hermanas.length;m++){ hermanas[m].classList.remove('sel'); }
+      this.classList.add('sel');
+      seleccion[n][p] = parseInt(o);
+    };
+  }
+}
+function calificar(n){
+  var preg = quizzes[n];
+  var aciertos = 0;
+  for(var i=0;i<preg.length;i++){
+    var ops = document.querySelectorAll('.opcion[data-n="'+n+'"][data-p="'+i+'"]');
+    for(var j=0;j<ops.length;j++){ ops[j].classList.remove('correcta','incorrecta'); }
+    if(seleccion[n].hasOwnProperty(i)){
+      var elegida = seleccion[n][i];
+      if(elegida === preg[i].c){ aciertos++; ops[elegida].classList.add('correcta'); }
+      else{ ops[elegida].classList.add('incorrecta'); ops[preg[i].c].classList.add('correcta'); }
+    }else{ ops[preg[i].c].classList.add('correcta'); }
+  }
+  var res = document.getElementById('res'+n);
+  var pct = Math.round((aciertos/preg.length)*100);
+  var msg = 'Obtuvo '+aciertos+' de '+preg.length+' aciertos ('+pct+'%). ';
+  res.style.display = 'block';
+  res.classList.remove('ok','medio','bajo');
+  if(aciertos===5){ res.classList.add('ok'); msg+='Excelente dominio del tema.'; }
+  else if(aciertos>=3){ res.classList.add('medio'); msg+='Buen avance; repase las secciones marcadas.'; }
+  else{ res.classList.add('bajo'); msg+='Le recomendamos revisar nuevamente el contenido.'; }
+  res.textContent = msg;
+  res.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function reiniciar(n){
+  seleccion[n] = {};
+  document.getElementById('res'+n).style.display = 'none';
+  construir(n);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  cargarGuardado();
+  construir(1); construir(2); construir(3);
+});
+</script>
+</body>
+</html>
