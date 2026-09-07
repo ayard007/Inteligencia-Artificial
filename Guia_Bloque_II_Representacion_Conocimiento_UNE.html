@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque II — Representación del Conocimiento | UNE</title>
+<style>
+:root{
+  --azul:#20276b; --azul2:#2b3a8c; --rojo:#e2231a;
+  --gris:#f4f5f9; --gris2:#e6e8f0; --texto:#1c2230;
+  --suave:#5a6275; --blanco:#ffffff; --sombra:0 4px 18px rgba(32,39,107,0.10);
+  --code:#1e2438;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--gris);color:var(--texto);line-height:1.7;font-size:17px}
+.layout{display:flex;max-width:1320px;margin:0 auto}
+nav.sidebar{width:300px;background:var(--azul);color:#fff;min-height:100vh;padding:26px 18px;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto}
+nav.sidebar .logo-box{background:#fff;border-radius:14px;padding:16px;text-align:center;margin-bottom:20px}
+nav.sidebar .logo-box img{width:120px;height:auto}
+nav.sidebar h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#aeb6e0;margin:20px 0 8px;border-bottom:1px solid #3a4494;padding-bottom:6px}
+nav.sidebar a{display:block;color:#dce0f4;text-decoration:none;padding:7px 12px;border-radius:8px;font-size:14.5px;margin-bottom:2px;transition:background .2s,color .2s}
+nav.sidebar a:hover{background:var(--azul2);color:#fff}
+nav.sidebar a.principal{font-weight:600;color:#fff}
+main{flex:1;background:var(--gris);min-width:0}
+header.hero{background:linear-gradient(135deg,var(--azul) 0%,var(--azul2) 60%,#3a47a0 100%);color:#fff;padding:46px 48px 40px}
+header.hero .kicker{display:inline-block;background:var(--rojo);color:#fff;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+header.hero h1{font-size:33px;line-height:1.25;margin-bottom:12px;font-weight:700}
+header.hero p{font-size:18px;color:#d5daf2;max-width:820px}
+header.hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px}
+header.hero .meta span{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:7px 16px;border-radius:8px;font-size:14px}
+.contenido{padding:38px 48px 70px}
+.sem-header{background:linear-gradient(135deg,#2b3a8c,#3a47a0);color:#fff;border-radius:16px;padding:26px 32px;margin:14px 0 26px;box-shadow:var(--sombra)}
+.sem-header .tag{display:inline-block;background:var(--rojo);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 13px;border-radius:16px;margin-bottom:10px}
+.sem-header h2{font-size:27px;margin-bottom:6px}
+.sem-header p{color:#d5daf2;font-size:16px;max-width:780px}
+section.card{background:#fff;border-radius:16px;padding:30px 34px;margin-bottom:26px;box-shadow:var(--sombra);scroll-margin-top:16px}
+section.card h3{color:var(--azul);font-size:22px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+section.card h3 .ico{background:var(--azul);color:#fff;width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-weight:700}
+section.card h4{color:var(--azul2);font-size:18px;margin:20px 0 8px}
+section.card h5{color:var(--rojo);font-size:15px;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+section.card p{margin-bottom:13px}
+section.card ul,section.card ol{margin:10px 0 15px 26px}
+section.card li{margin-bottom:7px}
+.subt{color:var(--suave);font-size:14px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:18px}
+.dato{border-left:4px solid var(--rojo);background:var(--gris);padding:15px 20px;border-radius:0 10px 10px 0;margin:16px 0}
+.dato strong{color:var(--azul)}
+.definicion{background:#eef0fb;border:1px solid var(--gris2);border-radius:12px;padding:18px 22px;margin:16px 0}
+.definicion .fuente{font-size:14px;color:var(--suave);font-style:italic;margin-top:6px}
+table.t{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+table.t th,table.t td{border:1px solid var(--gris2);padding:11px 14px;text-align:left;vertical-align:top}
+table.t th{background:var(--azul);color:#fff;font-weight:600}
+table.t tr:nth-child(even){background:var(--gris)}
+pre.code{background:var(--code);color:#e6e9f5;border-radius:10px;padding:18px 20px;margin:14px 0;overflow-x:auto;font-family:'Consolas','Monaco','Courier New',monospace;font-size:14px;line-height:1.6}
+pre.code .cm{color:#7c86b8}
+pre.code .kw{color:#ff8b7a}
+pre.code .st{color:#9ce69c}
+pre.code .nm{color:#f2c94c}
+code.inline{background:var(--gris2);color:var(--azul);padding:2px 7px;border-radius:5px;font-family:'Consolas','Monaco',monospace;font-size:14px}
+.pregunta-previa{background:linear-gradient(135deg,#fff4f3,#fdeceb);border:1px solid #f6cdca;border-radius:12px;padding:20px 24px;margin:6px 0}
+.pregunta-previa h5{color:var(--rojo);margin-top:0}
+.pregunta-previa textarea,.actividad textarea{width:100%;min-height:78px;margin-top:10px;padding:12px;border:1px solid var(--gris2);border-radius:8px;font-family:inherit;font-size:15px;resize:vertical}
+.actividad{border:2px solid var(--gris2);border-radius:14px;padding:24px 26px;margin:20px 0;background:#fff}
+.actividad .etiqueta{display:inline-block;background:var(--azul);color:#fff;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:12px}
+.actividad.foro{border-color:#c9d0f0}
+.actividad.aplicada{border-color:#c9e6d0}
+.actividad.aplicada .etiqueta{background:#1f7a44}
+.actividad.caso{border-color:#f0dcc9}
+.actividad.caso .etiqueta{background:#c9721f}
+.actividad h4{margin-top:2px;color:var(--azul)}
+.pasos{counter-reset:paso;list-style:none;margin-left:0}
+.pasos li{counter-increment:paso;position:relative;padding-left:42px;margin-bottom:13px}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:0;width:29px;height:29px;background:var(--rojo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.ejemplo{background:var(--gris);border-left:4px solid var(--azul2);padding:13px 18px;border-radius:0 8px 8px 0;margin:11px 0;font-size:15px}
+.ejemplo strong{color:var(--azul)}
+.entrega{background:#eef0fb;border-radius:8px;padding:11px 16px;margin-top:12px;font-size:14px;color:var(--azul)}
+.colab{display:inline-block;background:#1f7a44;color:#fff;font-size:13px;font-weight:600;padding:6px 14px;border-radius:8px;margin:8px 0}
+.pregunta-quiz{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--gris2)}
+.pregunta-quiz:last-of-type{border-bottom:none}
+.pregunta-quiz p.enunciado{font-weight:600;color:var(--azul);margin-bottom:11px;font-size:16px}
+.opcion{display:block;padding:11px 16px;border:2px solid var(--gris2);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all .15s;font-size:15px}
+.opcion:hover{border-color:var(--azul2);background:var(--gris)}
+.opcion.sel{border-color:var(--azul);background:#eef0fb}
+.opcion.correcta{border-color:#1f7a44;background:#e6f5ec}
+.opcion.incorrecta{border-color:var(--rojo);background:#fdecea}
+.btn{background:var(--rojo);color:#fff;border:none;padding:13px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;font-family:inherit}
+.btn:hover{background:#c01c14}
+.btn.sec{background:var(--azul)}
+.btn.sec:hover{background:var(--azul2)}
+.resultado{margin-top:20px;padding:20px;border-radius:12px;text-align:center;font-size:19px;font-weight:700;display:none}
+.resultado.ok{background:#e6f5ec;color:#1f7a44;border:2px solid #1f7a44}
+.resultado.medio{background:#fff6e6;color:#b8791a;border:2px solid #d99b2b}
+.resultado.bajo{background:#fdecea;color:var(--rojo);border:2px solid var(--rojo)}
+.reflexion{background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;border-radius:16px;padding:30px 34px;margin-bottom:26px}
+.reflexion h3{color:#fff}
+.reflexion h3 .ico{background:var(--rojo)}
+.reflexion textarea{width:100%;min-height:80px;margin:8px 0 14px;padding:13px;border:none;border-radius:10px;font-family:inherit;font-size:15px;resize:vertical}
+.reflexion label{display:block;font-weight:600;margin-top:10px;color:#dce0f4}
+.recursos li{margin-bottom:11px}
+.recursos a{color:var(--azul2);text-decoration:none;font-weight:600}
+.recursos a:hover{text-decoration:underline}
+.recursos .tipo{display:inline-block;background:var(--gris2);color:var(--suave);font-size:12px;padding:2px 10px;border-radius:12px;margin-right:8px;font-weight:600;text-transform:uppercase}
+.aviso{font-size:13px;color:var(--suave);margin-top:6px;font-style:italic}
+footer.pie{background:var(--azul);color:#c5cbe8;text-align:center;padding:30px 20px;font-size:14px}
+footer.pie img{width:80px;margin-bottom:12px;background:#fff;padding:8px;border-radius:10px}
+footer.pie strong{color:#fff;display:block;margin-bottom:4px}
+.divisor{height:3px;background:linear-gradient(90deg,var(--rojo),var(--azul));border-radius:2px;margin:44px 0 8px;opacity:.5}
+@media(max-width:900px){
+  .layout{flex-direction:column}
+  nav.sidebar{width:100%;height:auto;min-height:auto;position:static}
+  header.hero{padding:32px 24px}
+  header.hero h1{font-size:26px}
+  .contenido{padding:24px 18px 50px}
+  section.card{padding:22px 20px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="logo-box"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAACXBIWXMAAAsTAAALEwEAmpwYAAAFyWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4wLWMwMDEgNzkuYzAyMDRiMiwgMjAyMy8wMi8wOS0wNjoyNjoxNCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDI0LjMgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMy0wNC0wNlQwMjozMzozNC0wNjowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjMtMDQtMTlUMTI6MTk6MzQtMDY6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjMtMDQtMTlUMTI6MTk6MzQtMDY6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjE3MTdmNDhkLTE2NDYtYWQ0ZC1hYWExLWM0YzFlMjAwZDAyYyIgeG1wTU06RG9jdW1lbnRJRD0i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" alt="Logo UNE"></div>
+  <a class="principal" href="#inicio">Inicio del bloque</a>
+  <h2>Semana 4 · Agentes y heurística</h2>
+  <a href="#s4">Introducción</a>
+  <a href="#s4-contenido">Contenido temático</a>
+  <a href="#s4-recursos">Materiales</a>
+  <a href="#s4-previa">Conocimiento previo</a>
+  <a href="#s4-foro">Foro</a>
+  <a href="#s4-aplicada">Actividad en Python</a>
+  <a href="#s4-caso">Caso práctico</a>
+  <a href="#s4-quiz">Quiz</a>
+  <a href="#s4-reflexion">Reflexión</a>
+  <h2>Semana 5 · Sistemas de conocimiento</h2>
+  <a href="#s5">Introducción</a>
+  <a href="#s5-contenido">Contenido temático</a>
+  <a href="#s5-recursos">Materiales</a>
+  <a href="#s5-previa">Conocimiento previo</a>
+  <a href="#s5-foro">Foro</a>
+  <a href="#s5-aplicada">Actividad en Python</a>
+  <a href="#s5-caso">Caso práctico</a>
+  <a href="#s5-quiz">Quiz</a>
+  <a href="#s5-reflexion">Reflexión</a>
+  <h2>Semana 6 · Ontologías e inferencia</h2>
+  <a href="#s6">Introducción</a>
+  <a href="#s6-contenido">Contenido temático</a>
+  <a href="#s6-recursos">Materiales</a>
+  <a href="#s6-previa">Conocimiento previo</a>
+  <a href="#s6-foro">Foro</a>
+  <a href="#s6-aplicada">Actividad en Python</a>
+  <a href="#s6-caso">Caso práctico</a>
+  <a href="#s6-quiz">Quiz</a>
+  <a href="#s6-reflexion">Reflexión</a>
+  <h2>Semana 7 · Incertidumbre y Bayes</h2>
+  <a href="#s7">Introducción</a>
+  <a href="#s7-contenido">Contenido temático</a>
+  <a href="#s7-recursos">Materiales</a>
+  <a href="#s7-previa">Conocimiento previo</a>
+  <a href="#s7-foro">Foro</a>
+  <a href="#s7-aplicada">Actividad en Python</a>
+  <a href="#s7-caso">Caso práctico</a>
+  <a href="#s7-quiz">Quiz</a>
+  <a href="#s7-reflexion">Reflexión</a>
+</nav>
+<main>
+<header class="hero" id="inicio">
+  <span class="kicker">Curso · Bloque II</span>
+  <h1>Representación del Conocimiento</h1>
+  <p>Guía interactiva de aprendizaje para Ingeniería en Computación. Cada semana es una unidad completa con introducción, contenido temático, materiales de consulta, actividades para Google Classroom con programación en Python, y una sección de reflexión y aplicación.</p>
+  <div class="meta">
+    <span>Licenciatura en Ingeniería en Computación</span>
+    <span>5.º semestre · Fundamentos de IA</span>
+    <span>Semanas 4 a 7 · 16 horas</span>
+    <span>Universidad de Especialidades UNE — Plantel Centro</span>
+  </div>
+</header>
+<div class="contenido">
+<!-- ================= SEMANA 4 ================= -->
+<div class="sem-header" id="s4">
+  <span class="tag">Semana 4</span>
+  <h2>Agentes inteligentes y heurística</h2>
+  <p>Modelos de agente (reactivo, basado en modelo, en objetivos, en utilidad), el entorno PEAS, la definición de heurística y el concepto de racionalidad.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">El agente como unidad de análisis de la IA</p>
+  <p>El Bloque II responde a una pregunta central: ¿cómo representamos el conocimiento para que una máquina pueda usarlo y actuar? El punto de partida es el concepto de <strong>agente inteligente</strong>: toda entidad que percibe su entorno mediante sensores y actúa sobre él mediante actuadores. Comprender los tipos de agente permite diseñar sistemas que van desde un termostato hasta un vehículo autónomo.</p>
+  <p>Bajo el enfoque constructivista y de ABP, no basta con memorizar la clasificación de agentes: usted deberá <strong>modelar agentes reales, programarlos en Python y decidir qué arquitectura conviene a cada problema</strong>.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Clasificar agentes según su arquitectura, especificar un problema con el marco PEAS, y comprender qué significa que un agente sea racional y cómo la heurística guía sus decisiones.</div>
+</section>
+
+<section class="card" id="s4-contenido">
+  <h3><span class="ico">1</span> Contenido temático</h3>
+  <p class="subt">Tipos de agente, PEAS, heurística y racionalidad</p>
+
+  <h4>¿Qué es un agente inteligente?</h4>
+  <p>Un agente es cualquier sistema que percibe su entorno a través de <strong>sensores</strong> y actúa sobre él a través de <strong>actuadores</strong>, con el objetivo de cumplir una tarea. La inteligencia del agente está en la función que conecta lo que percibe con lo que hace.</p>
+
+  <h4>Los cuatro tipos de agente</h4>
+  <table class="t">
+    <tr><th>Tipo de agente</th><th>Cómo decide</th><th>Ejemplo</th></tr>
+    <tr><td>Reactivo simple</td><td>Actúa solo según la percepción actual, con reglas condición-acción. No tiene memoria.</td><td>Termostato: si hace frío, enciende.</td></tr>
+    <tr><td>Basado en modelo</td><td>Mantiene un estado interno del mundo para decidir, aun sin percibir todo.</td><td>Robot que recuerda qué zonas ya limpió.</td></tr>
+    <tr><td>Basado en objetivos</td><td>Elige acciones que lo acerquen a una meta definida.</td><td>GPS que busca llegar a un destino.</td></tr>
+    <tr><td>Basado en utilidad</td><td>Entre varias formas de lograr la meta, elige la de mayor "utilidad" (mejor resultado).</td><td>GPS que elige la ruta más rápida y económica.</td></tr>
+  </table>
+
+  <h4>El marco PEAS</h4>
+  <p>Para diseñar un agente, primero se especifica su entorno de tarea con el marco <strong>PEAS</strong>, por sus siglas en inglés:</p>
+  <ul>
+    <li><strong>P — Performance (medida de desempeño):</strong> ¿cómo evaluamos si el agente lo hace bien?</li>
+    <li><strong>E — Environment (entorno):</strong> ¿dónde opera?</li>
+    <li><strong>A — Actuators (actuadores):</strong> ¿con qué actúa?</li>
+    <li><strong>S — Sensors (sensores):</strong> ¿con qué percibe?</li>
+  </ul>
+  <div class="ejemplo"><strong>Ejemplo PEAS (taxi autónomo):</strong> Desempeño: llegar rápido, seguro y legal. Entorno: calles, tráfico, peatones. Actuadores: dirección, acelerador, freno. Sensores: cámaras, GPS, radar.</div>
+
+  <h4>Heurística y racionalidad</h4>
+  <p>Una <strong>heurística</strong> es una regla práctica o "atajo" que guía la búsqueda de una solución sin garantizar que sea perfecta, pero acelerando el proceso. Un agente es <strong>racional</strong> si, dado lo que percibe y sabe, elige la acción que maximiza su medida de desempeño. Racional no significa omnisciente: significa hacer lo mejor posible con la información disponible.</p>
+  <div class="dato"><strong>Idea clave.</strong> La heurística cambia la pregunta de "¿cuál es la solución perfecta?" a "¿cuál es una buena solución en un tiempo razonable?". Es el corazón de la IA práctica.</div>
+  <h5>Actividad en clase</h5>
+  <p>En equipos, especifiquen con el marco PEAS tres agentes distintos (por ejemplo: un asistente de voz, un filtro de spam y un robot aspirador) y clasifiquen cada uno según su tipo de arquitectura.</p>
+</section>
+
+<section class="card" id="s4-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.), capítulo 2: Agentes inteligentes. Prentice Hall.</li>
+    <li><span class="tipo">Libro</span> Poole, D. y Mackworth, A. (2017). <em>Artificial Intelligence: Foundations of Computational Agents</em> (2.ª ed.). Cambridge University Press. <a href="https://artint.info/" target="_blank" rel="noopener">artint.info</a></li>
+    <li><span class="tipo">Documentación</span> Python Software Foundation. <em>Clases en Python</em>. <a href="https://docs.python.org/es/3/tutorial/classes.html" target="_blank" rel="noopener">docs.python.org</a></li>
+  </ul>
+</section>
+
+<section class="card" id="s4-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras y sin consultar fuentes.</p>
+    <p><strong>Un termostato y un vehículo autónomo, ¿son ambos "agentes"? ¿Qué los diferencia en cuanto a la forma en que deciden qué hacer?</strong></p>
+    <textarea id="prev4" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev4','av4')">Guardar mi respuesta</button>
+    <p class="aviso" id="av4"></p>
+  </div>
+</section>
+
+<section class="card" id="s4-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>¿Más inteligente es siempre mejor?</h4>
+    <p><strong>Pregunta detonadora:</strong> Un agente basado en utilidad es más sofisticado que uno reactivo simple. Sin embargo, para muchos problemas reales se sigue usando el reactivo. ¿Cuándo conviene un agente simple y cuándo uno complejo? ¿Es siempre mejor el más inteligente? Argumente.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 4 — ¿Más inteligente es mejor?" en Classroom.</li>
+      <li>Publique una aportación de 150 a 250 palabras que defienda una postura con al menos un ejemplo concreto (costo, velocidad, complejidad).</li>
+      <li>Responda de forma argumentada a dos compañeros, aportando un matiz o un contraejemplo.</li>
+      <li>Cierre indicando en qué situación usted elegiría deliberadamente el agente más simple.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "Un agente reactivo es preferible en un control industrial donde la velocidad y la fiabilidad importan más que la flexibilidad: menos complejidad significa menos puntos de falla. Añadir utilidad tendría sentido solo si hubiera decisiones con verdaderos compromisos entre alternativas..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia en Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s4-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Programación en Python</span>
+    <h4>Programar un agente reactivo (mundo de la aspiradora)</h4>
+    <p>Objetivo: implementar en Python el agente reactivo más clásico de la IA, para comprender la relación percepción-acción de forma tangible.</p>
+    <span class="colab">Trabajen en Google Colab</span>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Abran un notebook nuevo en Google Colab.</li>
+      <li>Copien y ejecuten el siguiente código, que modela una aspiradora en dos ubicaciones (A y B) que pueden estar limpias o sucias.</li>
+      <li>Observen cómo el agente decide solo con base en su percepción actual (ubicación y estado), sin memoria.</li>
+      <li>Modifiquen el mundo inicial y prueben otros escenarios.</li>
+    </ol>
+    <pre class="code"><span class="cm"># Agente reactivo simple: mundo de la aspiradora</span>
+<span class="kw">def</span> agente_reactivo(ubicacion, estado):
+    <span class="cm"># Regla condicion-accion: decide solo con la percepcion actual</span>
+    <span class="kw">if</span> estado == <span class="st">"sucio"</span>:
+        <span class="kw">return</span> <span class="st">"Aspirar"</span>
+    <span class="kw">elif</span> ubicacion == <span class="st">"A"</span>:
+        <span class="kw">return</span> <span class="st">"Mover a B"</span>
+    <span class="kw">else</span>:
+        <span class="kw">return</span> <span class="st">"Mover a A"</span>
+
+<span class="cm"># Estado del mundo: cada ubicacion limpia o sucia</span>
+mundo = {<span class="st">"A"</span>: <span class="st">"sucio"</span>, <span class="st">"B"</span>: <span class="st">"sucio"</span>}
+ubicacion = <span class="st">"A"</span>
+
+<span class="kw">for</span> paso <span class="kw">in</span> range(<span class="nm">4</span>):
+    estado = mundo[ubicacion]
+    accion = agente_reactivo(ubicacion, estado)
+    print(<span class="st">"Ubicacion:"</span>, ubicacion, <span class="st">"| Estado:"</span>, estado, <span class="st">"| Accion:"</span>, accion)
+    <span class="kw">if</span> accion == <span class="st">"Aspirar"</span>:
+        mundo[ubicacion] = <span class="st">"limpio"</span>
+    <span class="kw">elif</span> accion == <span class="st">"Mover a B"</span>:
+        ubicacion = <span class="st">"B"</span>
+    <span class="kw">elif</span> accion == <span class="st">"Mover a A"</span>:
+        ubicacion = <span class="st">"A"</span></pre>
+    <h5>Retos de modificación</h5>
+    <ol class="pasos">
+      <li>Cambien el mundo inicial a <code class="inline">{"A": "limpio", "B": "sucio"}</code>. ¿Qué hace el agente?</li>
+      <li>Agreguen un contador que sume cuántas veces aspiró. Esa sería una medida de desempeño (la P de PEAS).</li>
+      <li>Respondan en un comentario: ¿por qué este agente no sabe cuándo ya limpió todo? ¿Qué le faltaría para saberlo? (pista: memoria, es decir, un agente basado en modelo).</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Enlace al notebook de Colab (con permiso de lectura) o captura del código y sus salidas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s4-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>Diseñar el agente de un dron de reparto</h4>
+    <div class="ejemplo"><strong>Caso.</strong> Una empresa quiere un dron autónomo que entregue paquetes en una ciudad. Debe encontrar la casa correcta, evitar obstáculos y otros drones, cuidar la batería y entregar a tiempo, adaptándose al clima.</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>Especifiquen el agente con el marco PEAS completo (Performance, Environment, Actuators, Sensors).</li>
+      <li>¿Qué tipo de agente sería el más adecuado (reactivo, basado en modelo, en objetivos o en utilidad)? Justifiquen.</li>
+      <li>Den un ejemplo concreto de una heurística que el dron podría usar para elegir su ruta.</li>
+      <li>¿Por qué un agente puramente reactivo sería insuficiente para esta tarea?</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con el análisis de las cuatro preguntas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s4-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 4</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz4"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(4)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(4)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res4"></div>
+</section>
+
+<section class="reflexion" id="s4-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Semana 4</h3>
+  <p>Planifique cómo incorporará lo aprendido. Sus respuestas se guardan en este dispositivo.</p>
+  <label>1. ¿Qué tipo de agente le parece más útil para un proyecto que esté desarrollando o imagine desarrollar?</label>
+  <textarea id="r4a"></textarea>
+  <label>2. ¿Cómo le ayudaría el marco PEAS a planear un sistema inteligente en otra de sus materias?</label>
+  <textarea id="r4b"></textarea>
+  <button class="btn" onclick="guardarRef(['r4a','r4b'],'avr4')">Guardar mi plan</button>
+  <p class="aviso" id="avr4" style="color:#dce0f4"></p>
+</section>
+
+<div class="divisor"></div>
+<!-- ================= SEMANA 5 ================= -->
+<div class="sem-header" id="s5">
+  <span class="tag">Semana 5</span>
+  <h2>Sistemas basados en conocimiento</h2>
+  <p>Concepto de conocimiento, tipos de razonamiento (deductivo, inductivo, abductivo) y los paradigmas para representarlo: programación lógica frente a programación funcional.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">De los datos al conocimiento accionable</p>
+  <p>Un sistema basado en conocimiento no solo almacena datos: guarda <strong>hechos y reglas</strong> que le permiten deducir información nueva. Esta semana distinguiremos el conocimiento del simple dato, veremos las formas en que un sistema puede razonar, y compararemos dos grandes paradigmas para representar conocimiento en código.</p>
+  <p>Desde el ABP, implementarán en Python un pequeño <strong>sistema de reglas</strong> capaz de deducir conclusiones, para experimentar la diferencia entre programar instrucciones y representar conocimiento.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Diferenciar dato, información y conocimiento; identificar los tipos de razonamiento; y comprender cómo los paradigmas lógico y funcional representan el conocimiento de manera distinta.</div>
+</section>
+
+<section class="card" id="s5-contenido">
+  <h3><span class="ico">1</span> Contenido temático</h3>
+  <p class="subt">Conocimiento, razonamiento y paradigmas</p>
+
+  <h4>Dato, información y conocimiento</h4>
+  <p>Un <strong>dato</strong> es un valor aislado (38.5). La <strong>información</strong> es un dato con contexto (la temperatura del paciente es 38.5 °C). El <strong>conocimiento</strong> permite actuar sobre esa información (si la temperatura supera 38 °C, hay fiebre). Un sistema basado en conocimiento opera en este tercer nivel.</p>
+
+  <h4>Tipos de razonamiento</h4>
+  <table class="t">
+    <tr><th>Tipo</th><th>De qué parte</th><th>Ejemplo</th></tr>
+    <tr><td>Deductivo</td><td>De reglas generales a una conclusión certera.</td><td>Todos los humanos son mortales; Sócrates es humano; luego Sócrates es mortal.</td></tr>
+    <tr><td>Inductivo</td><td>De casos particulares a una regla general probable.</td><td>Cada cuervo que vi es negro; probablemente todos lo son.</td></tr>
+    <tr><td>Abductivo</td><td>De un efecto a la explicación más probable.</td><td>El suelo está mojado; probablemente llovió.</td></tr>
+  </table>
+
+  <h4>Programación lógica frente a funcional</h4>
+  <p>Son dos paradigmas para representar conocimiento:</p>
+  <ul>
+    <li><strong>Programación lógica</strong> (por ejemplo, Prolog): se declaran <em>hechos</em> y <em>reglas</em>, y el sistema deduce respuestas. Se describe <em>qué</em> es verdadero, no <em>cómo</em> calcularlo.</li>
+    <li><strong>Programación funcional</strong> (por ejemplo, Lisp, o funciones puras en Python): se construyen soluciones combinando funciones sin efectos secundarios, transformando datos de entrada en salidas.</li>
+  </ul>
+  <div class="dato"><strong>Contraste clave.</strong> En el paradigma lógico usted declara conocimiento y el motor infiere. En el funcional usted define transformaciones. Python permite explorar ambos estilos, lo que lo hace ideal para aprender la diferencia.</div>
+  <h5>Actividad en clase</h5>
+  <p>Clasifiquen en grupo diez enunciados según el tipo de razonamiento que representan (deductivo, inductivo o abductivo) y discutan los casos ambiguos.</p>
+</section>
+
+<section class="card" id="s5-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.), agentes lógicos. Prentice Hall.</li>
+    <li><span class="tipo">Libro</span> Luger, G. F. y Stubblefield, W. A. (2009). <em>AI Algorithms, Data Structures, and Idioms in Prolog, Lisp, and Java</em>. Pearson Addison-Wesley. ISBN 978-0-13-607047-4.</li>
+    <li><span class="tipo">Libro</span> Frasnedo, M. A. e Iranzo, P. J. (2007). <em>Programación lógica</em>. Pearson Educación. ISBN 978-84-8322-368-0.</li>
+    <li><span class="tipo">Documentación</span> <em>Programación funcional en Python (HOWTO)</em>. <a href="https://docs.python.org/es/3/howto/functional.html" target="_blank" rel="noopener">docs.python.org</a></li>
+  </ul>
+</section>
+
+<section class="card" id="s5-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras antes de estudiar el contenido.</p>
+    <p><strong>¿Qué diferencia hay entre "un dato" y "conocimiento"? Dé un ejemplo propio donde un mismo dato se convierta en conocimiento útil.</strong></p>
+    <textarea id="prev5" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev5','av5')">Guardar mi respuesta</button>
+    <p class="aviso" id="av5"></p>
+  </div>
+</section>
+
+<section class="card" id="s5-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>¿Declarar conocimiento o programar instrucciones?</h4>
+    <p><strong>Pregunta detonadora:</strong> En la programación lógica se declara <em>qué</em> es verdadero y el sistema deduce; en la programación tradicional se indica <em>cómo</em> hacer cada paso. ¿Qué ventajas y desventajas ve en cada enfoque para construir un sistema experto? ¿Por qué la mayoría de los lenguajes populares no son lógicos?</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 5 — Declarar vs. programar" en Classroom.</li>
+      <li>Publique una aportación de 150 a 250 palabras contrastando ambos paradigmas con un ejemplo.</li>
+      <li>Responda a dos compañeros, señalando un punto que no habían considerado.</li>
+      <li>Concluya con el paradigma que usted elegiría para un sistema de diagnóstico y por qué.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "El paradigma lógico brilla cuando el conocimiento se expresa naturalmente como reglas, por ejemplo en diagnóstico médico, porque agregar una regla no obliga a reescribir el flujo. Su desventaja es el rendimiento y la curva de aprendizaje, lo que explica su menor adopción frente a lenguajes imperativos..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia en Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s5-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Programación en Python</span>
+    <h4>Un mini sistema experto con hechos y reglas</h4>
+    <p>Objetivo: representar conocimiento como hechos y reglas en Python, imitando el estilo declarativo de la programación lógica, para deducir conclusiones nuevas.</p>
+    <span class="colab">Trabajen en Google Colab</span>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Abran un notebook en Colab y ejecuten el código, que representa una base de hechos y reglas sobre animales.</li>
+      <li>Observen cómo el sistema deduce el tipo de animal a partir de sus características, sin que se lo digamos directamente.</li>
+      <li>Agreguen nuevos hechos y una regla propia.</li>
+    </ol>
+    <pre class="code"><span class="cm"># Mini sistema experto: deduce el animal a partir de hechos</span>
+<span class="cm"># Base de hechos: caracteristicas observadas</span>
+hechos = {<span class="st">"tiene_pelo"</span>: <span class="st">True</span>, <span class="st">"da_leche"</span>: <span class="st">True</span>,
+          <span class="st">"come_carne"</span>: <span class="st">True</span>, <span class="st">"color_leonado"</span>: <span class="st">True</span>,
+          <span class="st">"tiene_manchas"</span>: <span class="st">True</span>}
+
+<span class="kw">def</span> es_mamifero(h):
+    <span class="kw">return</span> h.get(<span class="st">"tiene_pelo"</span>) <span class="kw">or</span> h.get(<span class="st">"da_leche"</span>)
+
+<span class="kw">def</span> es_carnivoro(h):
+    <span class="kw">return</span> h.get(<span class="st">"come_carne"</span>)
+
+<span class="kw">def</span> diagnosticar(h):
+    <span class="cm"># Reglas de inferencia encadenadas</span>
+    <span class="kw">if</span> es_mamifero(h) <span class="kw">and</span> es_carnivoro(h):
+        <span class="kw">if</span> h.get(<span class="st">"color_leonado"</span>) <span class="kw">and</span> h.get(<span class="st">"tiene_manchas"</span>):
+            <span class="kw">return</span> <span class="st">"Es un GUEPARDO"</span>
+        <span class="kw">return</span> <span class="st">"Es un carnivoro no identificado"</span>
+    <span class="kw">return</span> <span class="st">"No hay suficiente informacion"</span>
+
+print(diagnosticar(hechos))</pre>
+    <h5>Retos de modificación</h5>
+    <ol class="pasos">
+      <li>Cambien <code class="inline">"tiene_manchas"</code> a <code class="inline">False</code>. ¿Qué deduce ahora el sistema?</li>
+      <li>Agreguen los hechos y una regla para deducir un TIGRE (leonado, con rayas en lugar de manchas).</li>
+      <li>Expliquen en un comentario qué tipo de razonamiento aplica el sistema (deductivo) y por qué.</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Enlace al notebook de Colab o captura del código y salidas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s5-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>El sistema experto agrícola</h4>
+    <div class="ejemplo"><strong>Caso.</strong> Una cooperativa quiere un sistema que recomiende cuándo regar un cultivo. Se sabe: si la humedad del suelo es baja y no hay lluvia pronosticada, se debe regar; si la humedad es alta, no se riega; si hay lluvia pronosticada, se pospone el riego aunque la humedad sea baja.</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>Escriban las reglas del sistema en forma "si... entonces...".</li>
+      <li>¿Qué tipo de razonamiento usa el sistema para llegar a una recomendación?</li>
+      <li>¿Por qué conviene representar esto como reglas y no como código fijo con muchos "if" anidados sin estructura?</li>
+      <li>Propongan una regla adicional que haga el sistema más útil (por ejemplo, considerar la etapa del cultivo).</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con las reglas y el análisis, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s5-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 5</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz5"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(5)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(5)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res5"></div>
+</section>
+
+<section class="reflexion" id="s5-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Semana 5</h3>
+  <p>Planifique cómo incorporará lo aprendido. Sus respuestas se guardan en este dispositivo.</p>
+  <label>1. ¿En qué proyecto o materia podría representar conocimiento como reglas en lugar de instrucciones fijas?</label>
+  <textarea id="r5a"></textarea>
+  <label>2. ¿Qué tipo de razonamiento (deductivo, inductivo, abductivo) usa usted más al resolver problemas de programación y por qué?</label>
+  <textarea id="r5b"></textarea>
+  <button class="btn" onclick="guardarRef(['r5a','r5b'],'avr5')">Guardar mi plan</button>
+  <p class="aviso" id="avr5" style="color:#dce0f4"></p>
+</section>
+
+<div class="divisor"></div>
+<!-- ================= SEMANA 6 ================= -->
+<div class="sem-header" id="s6">
+  <span class="tag">Semana 6</span>
+  <h2>Ontologías, redes semánticas e inferencia</h2>
+  <p>Ingeniería ontológica, redes semánticas como estructura de conocimiento, inferencia lógica y sus limitantes, y los mecanismos de unificación y backtracking implementados en Python.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">Organizar el conocimiento para poder razonar sobre él</p>
+  <p>Para que una máquina razone, el conocimiento debe estar estructurado. Esta semana veremos dos formas de organizarlo: las <strong>ontologías</strong>, que definen conceptos y sus relaciones dentro de un dominio, y las <strong>redes semánticas</strong>, que los representan como grafos. Luego estudiaremos cómo un motor de inferencia extrae conclusiones, y dos mecanismos que lo hacen posible: la <strong>unificación</strong> y el <strong>backtracking</strong>.</p>
+  <p>Bajo el ABP, implementarán una red semántica y un pequeño motor de inferencia en Python, comprendiendo desde dentro cómo un sistema "busca" una respuesta y retrocede cuando se equivoca.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Modelar conocimiento como red semántica, comprender la inferencia lógica y sus límites, e implementar unificación y backtracking en Python.</div>
+</section>
+
+<section class="card" id="s6-contenido">
+  <h3><span class="ico">1</span> Contenido temático</h3>
+  <p class="subt">Ontologías, redes semánticas, inferencia y sus mecanismos</p>
+
+  <h4>Ingeniería ontológica</h4>
+  <p>Una <strong>ontología</strong> es una especificación formal y explícita de los conceptos de un dominio y las relaciones entre ellos. Define, por ejemplo, que un "perro" es un "mamífero", que a su vez es un "animal". Permite compartir un vocabulario común y razonar por herencia.</p>
+
+  <h4>Redes semánticas</h4>
+  <p>Una <strong>red semántica</strong> representa el conocimiento como un grafo: los <strong>nodos</strong> son conceptos y las <strong>aristas</strong> son relaciones (es-un, tiene, parte-de). Son intuitivas y permiten deducir por herencia: si un canario es un ave y las aves vuelan, se infiere que el canario vuela.</p>
+  <div class="ejemplo"><strong>Ejemplo:</strong> Canario —es_un→ Ave —es_un→ Animal; Ave —puede→ Volar. Se deduce: Canario puede Volar.</div>
+
+  <h4>Inferencia lógica y sus limitantes</h4>
+  <p>La <strong>inferencia</strong> es el proceso de derivar hechos nuevos a partir de los conocidos aplicando reglas. Sus limitantes incluyen: el conocimiento incompleto (lo que no está declarado se asume falso), las excepciones (un pingüino es ave pero no vuela) y el costo computacional cuando el espacio de búsqueda crece.</p>
+
+  <h4>Unificación y backtracking</h4>
+  <p>La <strong>unificación</strong> es el mecanismo que hace coincidir una consulta con los hechos y reglas, encontrando qué valores hacen verdadera una expresión (por ejemplo, unificar <em>padre(X, ana)</em> con el hecho <em>padre(juan, ana)</em> asigna X = juan). El <strong>backtracking</strong> es la estrategia de "retroceder" cuando un camino de búsqueda falla, para probar otra alternativa. Juntos son la base de cómo razonan los sistemas lógicos.</p>
+  <div class="dato"><strong>Idea clave.</strong> Buscar una respuesta es probar caminos; el backtracking permite deshacer una elección equivocada y explorar otra, hasta hallar la solución o agotar las opciones.</div>
+  <h5>Actividad en clase</h5>
+  <p>Dibujen en equipo una red semántica de un dominio (por ejemplo, medios de transporte) con al menos ocho conceptos y sus relaciones, y deduzcan a mano tres hechos nuevos por herencia.</p>
+</section>
+
+<section class="card" id="s6-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.), representación del conocimiento e inferencia. Prentice Hall.</li>
+    <li><span class="tipo">Libro</span> Luger, G. F. y Stubblefield, W. A. (2009). <em>AI Algorithms, Data Structures, and Idioms in Prolog, Lisp, and Java</em>. Pearson. ISBN 978-0-13-607047-4.</li>
+    <li><span class="tipo">Documentación</span> NetworkX. <em>Software para el análisis de grafos y redes en Python</em>. <a href="https://networkx.org/documentation/stable/" target="_blank" rel="noopener">networkx.org</a></li>
+  </ul>
+</section>
+
+<section class="card" id="s6-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras antes de estudiar el contenido.</p>
+    <p><strong>Si un sistema sabe que "las aves vuelan" y que "un pingüino es un ave", ¿qué concluiría sobre el pingüino? ¿Por qué esa conclusión sería incorrecta y qué nos dice sobre los límites de la inferencia?</strong></p>
+    <textarea id="prev6" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev6','av6')">Guardar mi respuesta</button>
+    <p class="aviso" id="av6"></p>
+  </div>
+</section>
+
+<section class="card" id="s6-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>Cuando la lógica se equivoca</h4>
+    <p><strong>Pregunta detonadora:</strong> La inferencia lógica es potente, pero un sistema que "sabe" que las aves vuelan concluirá erróneamente que un pingüino vuela. ¿Cómo debería un sistema de conocimiento manejar las excepciones? ¿Es esto una debilidad de la lógica o un problema de cómo representamos el conocimiento? Argumente.</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 6 — Cuando la lógica se equivoca" en Classroom.</li>
+      <li>Publique una aportación de 150 a 250 palabras proponiendo cómo manejar las excepciones en una red semántica.</li>
+      <li>Responda a dos compañeros con una perspectiva distinta.</li>
+      <li>Cierre relacionando el problema con algún caso real de IA que haya fallado por una suposición implícita.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "Las excepciones sugieren que la herencia debe ser 'no monótona': una propiedad heredada puede anularse en un nodo específico. El pingüino heredaría 'es ave' pero tendría un hecho propio 'no vuela' con prioridad. No es una debilidad de la lógica, sino una exigencia de modelar el mundo con matices..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia en Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s6-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Programación en Python</span>
+    <h4>Red semántica con inferencia por herencia y backtracking</h4>
+    <p>Objetivo: implementar una red semántica en Python y un motor que infiera hechos por herencia, incluyendo una búsqueda con backtracking sobre relaciones familiares.</p>
+    <span class="colab">Trabajen en Google Colab</span>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Abran un notebook en Colab y ejecuten el código, que representa una red semántica de "es_un" y consulta propiedades por herencia.</li>
+      <li>Observen cómo el sistema deduce que un canario vuela sin que se lo digamos directamente.</li>
+      <li>Prueben la búsqueda con backtracking y agreguen conceptos propios.</li>
+    </ol>
+    <pre class="code"><span class="cm"># Red semantica: relaciones "es_un" y propiedades</span>
+es_un = {
+    <span class="st">"canario"</span>: <span class="st">"ave"</span>,
+    <span class="st">"ave"</span>: <span class="st">"animal"</span>,
+    <span class="st">"pinguino"</span>: <span class="st">"ave"</span>
+}
+propiedades = {
+    <span class="st">"ave"</span>: [<span class="st">"vuela"</span>, <span class="st">"tiene_plumas"</span>],
+    <span class="st">"animal"</span>: [<span class="st">"respira"</span>, <span class="st">"se_mueve"</span>]
+}
+
+<span class="kw">def</span> tiene_propiedad(concepto, prop):
+    <span class="cm"># Inferencia por herencia: sube por la cadena es_un (backtracking simple)</span>
+    actual = concepto
+    <span class="kw">while</span> actual <span class="kw">is</span> <span class="kw">not</span> <span class="st">None</span>:
+        <span class="kw">if</span> prop <span class="kw">in</span> propiedades.get(actual, []):
+            <span class="kw">return</span> <span class="st">True</span>
+        actual = es_un.get(actual)  <span class="cm"># retrocede al concepto padre</span>
+    <span class="kw">return</span> <span class="st">False</span>
+
+print(<span class="st">"El canario vuela?"</span>, tiene_propiedad(<span class="st">"canario"</span>, <span class="st">"vuela"</span>))
+print(<span class="st">"El canario respira?"</span>, tiene_propiedad(<span class="st">"canario"</span>, <span class="st">"respira"</span>))
+print(<span class="st">"El canario nada?"</span>, tiene_propiedad(<span class="st">"canario"</span>, <span class="st">"nada"</span>))</pre>
+    <h5>Retos de modificación</h5>
+    <ol class="pasos">
+      <li>Agreguen el concepto <code class="inline">"mamifero"</code> con la propiedad <code class="inline">"da_leche"</code> y un <code class="inline">"perro"</code> que sea mamífero. Verifiquen que el perro "da leche".</li>
+      <li>El código deduce que el pingüino vuela (por herencia). Agreguen una forma de registrar la excepción "el pingüino NO vuela" y modifiquen la función para respetarla.</li>
+      <li>Expliquen en un comentario dónde ocurre el "retroceso" (backtracking) en la función y qué representa.</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Enlace al notebook de Colab o captura del código y salidas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s6-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>La ontología de una biblioteca digital</h4>
+    <div class="ejemplo"><strong>Caso.</strong> Una biblioteca digital quiere organizar su catálogo con una ontología para que el sistema recomiende y deduzca. Debe representar que un "libro" y una "revista" son "publicaciones"; que una "novela" es un "libro"; y propiedades como "tiene autor" o "se presta 14 días".</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>Dibujen o describan la red semántica con al menos seis conceptos y sus relaciones "es_un".</li>
+      <li>¿Qué propiedades heredaría una "novela" de las clases superiores? Enumérenlas.</li>
+      <li>Identifiquen una posible excepción (por ejemplo, una publicación de referencia que no se presta) y expliquen cómo la representarían.</li>
+      <li>¿Qué ventaja da la herencia frente a repetir las propiedades en cada tipo de publicación?</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con la red semántica y el análisis, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s6-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 6</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz6"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(6)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(6)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res6"></div>
+</section>
+
+<section class="reflexion" id="s6-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Semana 6</h3>
+  <p>Planifique cómo incorporará lo aprendido. Sus respuestas se guardan en este dispositivo.</p>
+  <label>1. ¿Qué dominio de su interés podría organizar como una red semántica u ontología?</label>
+  <textarea id="r6a"></textarea>
+  <label>2. ¿Cómo le ayuda entender el backtracking a comprender otros algoritmos de búsqueda que verá más adelante?</label>
+  <textarea id="r6b"></textarea>
+  <button class="btn" onclick="guardarRef(['r6a','r6b'],'avr6')">Guardar mi plan</button>
+  <p class="aviso" id="avr6" style="color:#dce0f4"></p>
+</section>
+
+<div class="divisor"></div>
+<!-- ================= SEMANA 7 ================= -->
+<div class="sem-header" id="s7">
+  <span class="tag">Semana 7</span>
+  <h2>Razonamiento con incertidumbre</h2>
+  <p>Aprendizaje y razonamiento probabilístico, probabilidad básica, el Teorema de Bayes y los momios (Odds), con ejercicios aplicados en Python.</p>
+</div>
+
+<section class="card">
+  <h3><span class="ico">i</span> Introducción</h3>
+  <p class="subt">Razonar cuando no hay certezas</p>
+  <p>El mundo real rara vez ofrece certezas absolutas. Un diagnóstico médico, un filtro de spam o un sistema de recomendación operan con <strong>probabilidades</strong>, no con verdades definitivas. Esta semana cierra el bloque incorporando la incertidumbre al razonamiento: cómo cuantificarla con probabilidad básica y cómo actualizar nuestras creencias con evidencia mediante el <strong>Teorema de Bayes</strong>.</p>
+  <p>Bajo el ABP, implementarán en Python un clasificador que usa el Teorema de Bayes para tomar decisiones bajo incertidumbre, conectando este bloque con el aprendizaje automático que verán después.</p>
+  <div class="dato"><strong>Propósito de la semana.</strong> Comprender la probabilidad básica, aplicar el Teorema de Bayes para actualizar creencias con evidencia, e interpretar resultados en términos de momios (Odds).</div>
+</section>
+
+<section class="card" id="s7-contenido">
+  <h3><span class="ico">1</span> Contenido temático</h3>
+  <p class="subt">Probabilidad, Bayes y momios</p>
+
+  <h4>Probabilidad básica</h4>
+  <p>La <strong>probabilidad</strong> de un evento es un número entre 0 (imposible) y 1 (seguro) que mide qué tan factible es que ocurra. Se calcula, en casos simples, como casos favorables entre casos posibles. La <strong>probabilidad condicional</strong> P(A|B) mide la probabilidad de A dado que ya ocurrió B, y es la base del razonamiento con evidencia.</p>
+
+  <h4>El Teorema de Bayes</h4>
+  <p>Permite <strong>actualizar una creencia</strong> cuando llega nueva evidencia. Su formulación es:</p>
+  <div class="definicion">P(A|B) = [ P(B|A) · P(A) ] / P(B)
+    <div class="fuente">Donde P(A) es la creencia previa, P(B|A) la verosimilitud de la evidencia, y P(A|B) la creencia actualizada.</div>
+  </div>
+  <p>Es el fundamento de innumerables sistemas de IA: filtros de spam, diagnóstico, reconocimiento de voz. Su poder está en combinar el conocimiento previo con la evidencia observada.</p>
+
+  <h4>Momios (Odds)</h4>
+  <p>Los <strong>momios</strong> expresan la probabilidad como una razón entre lo que ocurre y lo que no ocurre. Si la probabilidad de un evento es 0.8, sus momios son 0.8/0.2 = 4, es decir, "4 a 1 a favor". Los momios son útiles porque simplifican la forma de actualizar creencias con Bayes.</p>
+  <div class="dato"><strong>Ejemplo clásico.</strong> Una prueba médica con alta sensibilidad puede seguir dando muchos falsos positivos si la enfermedad es rara. El Teorema de Bayes explica esta aparente paradoja considerando la probabilidad previa (la rareza de la enfermedad).</div>
+  <h5>Actividad en clase</h5>
+  <p>Resuelvan en grupo el problema clásico de la prueba médica: dada una enfermedad que afecta al 1 % de la población y una prueba con 99 % de sensibilidad y 95 % de especificidad, calculen la probabilidad real de estar enfermo tras un positivo. Discutan el resultado contraintuitivo.</p>
+</section>
+
+<section class="card" id="s7-recursos">
+  <h3><span class="ico">+</span> Materiales externos de consulta</h3>
+  <p class="subt">Fuentes formales para profundizar</p>
+  <ul class="recursos">
+    <li><span class="tipo">Libro</span> Russell, S. J. y Norvig, P. (2020). <em>Inteligencia Artificial: Un Enfoque Moderno</em> (2.ª ed.), incertidumbre y razonamiento probabilístico. Prentice Hall.</li>
+    <li><span class="tipo">Libro</span> Jiménez, J. A. (2010). <em>Matemáticas para la computación</em> (3.ª ed.). Alfaomega.</li>
+    <li><span class="tipo">Curso</span> Khan Academy. <em>Probabilidad condicional y Teorema de Bayes</em>. <a href="https://es.khanacademy.org/math/statistics-probability/probability-library" target="_blank" rel="noopener">es.khanacademy.org</a></li>
+    <li><span class="tipo">Comunidad</span> Kaggle. <em>Machine Learning and Data Science Community</em>. <a href="https://www.kaggle.com/" target="_blank" rel="noopener">kaggle.com</a></li>
+  </ul>
+</section>
+
+<section class="card" id="s7-previa">
+  <div class="pregunta-previa">
+    <h5>Pregunta de conocimiento previo</h5>
+    <p>Responda con sus propias palabras antes de estudiar el contenido.</p>
+    <p><strong>Una prueba médica para una enfermedad rara da positivo. La prueba es "99 % precisa". ¿Está usted seguro de estar enfermo? ¿Por qué sí o por qué no?</strong></p>
+    <textarea id="prev7" placeholder="Escriba aquí su respuesta inicial..."></textarea>
+    <button class="btn sec" onclick="guardar('prev7','av7')">Guardar mi respuesta</button>
+    <p class="aviso" id="av7"></p>
+  </div>
+</section>
+
+<section class="card" id="s7-foro">
+  <div class="actividad foro">
+    <span class="etiqueta">Actividad 1 · Foro de mediación</span>
+    <h4>La paradoja del falso positivo</h4>
+    <p><strong>Pregunta detonadora:</strong> Mucha gente cree que si una prueba es "99 % precisa" y da positivo, casi con certeza está enferma. El Teorema de Bayes demuestra que esto puede ser falso cuando la enfermedad es rara. ¿Por qué nuestra intuición falla aquí? ¿Qué consecuencias tiene esto para diseñar sistemas de IA que toman decisiones sobre personas?</p>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Ingrese al foro "Semana 7 — La paradoja del falso positivo" en Classroom.</li>
+      <li>Publique una aportación de 150 a 250 palabras explicando por qué la intuición falla, apoyándose en la idea de probabilidad previa.</li>
+      <li>Responda a dos compañeros aportando un ejemplo distinto (spam, seguridad, crédito).</li>
+      <li>Cierre con una recomendación para quien diseñe sistemas de IA que clasifican personas.</li>
+    </ol>
+    <div class="ejemplo"><strong>Ejemplo:</strong> "La intuición ignora la probabilidad previa: si solo 1 de cada 100 personas está enferma, incluso una prueba muy precisa genera más falsos positivos que verdaderos positivos en números absolutos. Para la IA, esto obliga a reportar no solo la precisión, sino la tasa base del fenómeno..."</div>
+    <div class="entrega"><strong>Entrega:</strong> 1 aportación inicial + 2 respuestas. Evidencia en Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s7-aplicada">
+  <div class="actividad aplicada">
+    <span class="etiqueta">Actividad 2 · Programación en Python</span>
+    <h4>Clasificador bayesiano y la prueba médica</h4>
+    <p>Objetivo: implementar el Teorema de Bayes en Python para resolver el problema de la prueba médica y construir un mini clasificador de spam, conectando la teoría con una aplicación real.</p>
+    <span class="colab">Trabajen en Google Colab</span>
+    <h5>Instrucciones paso a paso</h5>
+    <ol class="pasos">
+      <li>Abran un notebook en Colab y ejecuten el código, que calcula la probabilidad real de estar enfermo tras un positivo.</li>
+      <li>Observen lo contraintuitivo del resultado y relaciónenlo con la probabilidad previa.</li>
+      <li>Modifiquen los valores y observen cómo cambia la conclusión.</li>
+    </ol>
+    <pre class="code"><span class="cm"># Teorema de Bayes: la prueba medica</span>
+<span class="cm"># P(enfermo) previa, sensibilidad y especificidad de la prueba</span>
+p_enfermo = <span class="nm">0.01</span>          <span class="cm"># 1% de la poblacion</span>
+p_pos_dado_enfermo = <span class="nm">0.99</span>  <span class="cm"># sensibilidad</span>
+p_neg_dado_sano = <span class="nm">0.95</span>     <span class="cm"># especificidad</span>
+
+p_sano = <span class="nm">1</span> - p_enfermo
+p_pos_dado_sano = <span class="nm">1</span> - p_neg_dado_sano  <span class="cm"># falso positivo</span>
+
+<span class="cm"># P(positivo) total (probabilidad de dar positivo por cualquier via)</span>
+p_positivo = (p_pos_dado_enfermo * p_enfermo) + (p_pos_dado_sano * p_sano)
+
+<span class="cm"># Teorema de Bayes: P(enfermo | positivo)</span>
+p_enfermo_dado_pos = (p_pos_dado_enfermo * p_enfermo) / p_positivo
+
+print(<span class="st">"Probabilidad real de estar enfermo tras un positivo:"</span>)
+print(round(p_enfermo_dado_pos * <span class="nm">100</span>, <span class="nm">2</span>), <span class="st">"%"</span>)</pre>
+    <h5>Retos de modificación</h5>
+    <ol class="pasos">
+      <li>Cambien <code class="inline">p_enfermo</code> a <code class="inline">0.10</code> (enfermedad más común). ¿Sube o baja la probabilidad tras un positivo? ¿Por qué?</li>
+      <li>Calculen los momios (Odds) del resultado: <code class="inline">odds = p_enfermo_dado_pos / (1 - p_enfermo_dado_pos)</code> e imprímanlos.</li>
+      <li>Adapten la fórmula para un filtro de spam: sustituyan "enfermo" por "spam" y la evidencia por "contiene la palabra gratis". Interpreten el resultado.</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Enlace al notebook de Colab o captura del código y salidas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s7-caso">
+  <div class="actividad caso">
+    <span class="etiqueta">Actividad 3 · Caso práctico</span>
+    <h4>El filtro de spam bajo sospecha</h4>
+    <div class="ejemplo"><strong>Caso.</strong> Un filtro de correo marca como spam todo mensaje que contenga la palabra "premio". Un usuario se queja de que muchos correos legítimos (de concursos académicos reales) terminan en spam. El equipo defiende que "la palabra premio aparece en el 90 % del spam".</div>
+    <h5>Preguntas para responder</h5>
+    <ol class="pasos">
+      <li>¿Qué información falta para saber si el filtro es realmente confiable? (pista: probabilidad previa de spam y frecuencia de "premio" en correos legítimos).</li>
+      <li>Relacionen el problema con la paradoja del falso positivo vista en la semana.</li>
+      <li>Usando la idea del Teorema de Bayes, expliquen por qué "aparece en el 90 % del spam" no basta para clasificar bien.</li>
+      <li>Propongan una mejora al filtro basada en evidencia probabilística.</li>
+    </ol>
+    <div class="entrega"><strong>Entrega:</strong> Documento con el análisis de las cuatro preguntas, subido a Classroom.</div>
+  </div>
+</section>
+
+<section class="card" id="s7-quiz">
+  <h3><span class="ico">4</span> Quiz de la Semana 7</h3>
+  <p class="subt">Cinco preguntas · muestra su puntaje al finalizar</p>
+  <div id="quiz7"></div>
+  <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+    <button class="btn" onclick="calificar(7)">Calificar quiz</button>
+    <button class="btn sec" onclick="reiniciar(7)">Reiniciar</button>
+  </div>
+  <div class="resultado" id="res7"></div>
+</section>
+
+<section class="reflexion" id="s7-reflexion">
+  <h3><span class="ico">R</span> Reflexión y aplicación · Cierre del Bloque II</h3>
+  <p>Integre lo aprendido en las cuatro semanas y planifique su aplicación académica y profesional.</p>
+  <label>1. Integrando el bloque, ¿cómo definiría "representar el conocimiento" y por qué es distinto de solo guardar datos?</label>
+  <textarea id="r7a"></textarea>
+  <label>2. De los temas vistos (agentes, sistemas de reglas, redes semánticas, Bayes), ¿cuál aplicará primero y en qué proyecto?</label>
+  <textarea id="r7b"></textarea>
+  <label>3. ¿Qué compromiso asume al diseñar sistemas que razonan con incertidumbre y toman decisiones sobre personas?</label>
+  <textarea id="r7c"></textarea>
+  <button class="btn" onclick="guardarRef(['r7a','r7b','r7c'],'avr7')">Guardar mi plan de aplicación</button>
+  <p class="aviso" id="avr7" style="color:#dce0f4"></p>
+</section>
+
+</div>
+<footer class="pie">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAYAAAB5fY51AAAACXBIWXMAAAsTAAALEwEAmpwYAAAFyWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4wLWMwMDEgNzkuYzAyMDRiMiwgMjAyMy8wMi8wOS0wNjoyNjoxNCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDI0LjMgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMy0wNC0wNlQwMjozMzozNC0wNjowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjMtMDQtMTlUMTI6MTk6MzQtMDY6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjMtMDQtMTlUMTI6MTk6MzQtMDY6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjE3MTdmNDhkLTE2NDYtYWQ0ZC1hYWExLWM0YzFlMjAwZDAyYyIgeG1wTU06RG9jdW1lbnRJRD0i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" alt="Logo UNE">
+  <strong>Universidad de Especialidades UNE — Plantel Centro</strong>
+  Licenciatura en Ingeniería en Computación · Fundamentos de Inteligencia Artificial<br>
+  Bloque II — Representación del Conocimiento · Guía interactiva de aprendizaje
+</footer>
+</main>
+</div>
+<script>
+function guardar(id, avisoId){
+  try{ localStorage.setItem('une_b2_'+id, document.getElementById(id).value);
+    document.getElementById(avisoId).textContent = 'Respuesta guardada en este dispositivo.';
+  }catch(e){ document.getElementById(avisoId).textContent = 'No fue posible guardar en este navegador.'; }
+}
+function guardarRef(ids, avisoId){
+  try{ for(var i=0;i<ids.length;i++){ localStorage.setItem('une_b2_'+ids[i], document.getElementById(ids[i]).value); }
+    document.getElementById(avisoId).textContent = 'Su plan fue guardado en este dispositivo.';
+  }catch(e){ document.getElementById(avisoId).textContent = 'No fue posible guardar en este navegador.'; }
+}
+function cargarGuardado(){
+  var ids = ['prev4','prev5','prev6','prev7','r4a','r4b','r5a','r5b','r6a','r6b','r7a','r7b','r7c'];
+  try{ for(var i=0;i<ids.length;i++){
+    var v = localStorage.getItem('une_b2_'+ids[i]);
+    if(v && document.getElementById(ids[i])) document.getElementById(ids[i]).value = v;
+  } }catch(e){}
+}
+
+var quizzes = {
+  4: [
+    {q:'1. ¿Qué caracteriza a un agente reactivo simple?',
+     o:['Mantiene un modelo interno del mundo','Actúa solo según la percepción actual, sin memoria','Siempre elige la ruta de mayor utilidad','Aprende de la experiencia'], c:1},
+    {q:'2. En el marco PEAS, la letra P corresponde a:',
+     o:['Percepción','Programa','Medida de desempeño (Performance)','Prioridad'], c:2},
+    {q:'3. Un agente que, entre varias formas de lograr su meta, elige la de mejor resultado es un agente:',
+     o:['Reactivo simple','Basado en modelo','Basado en utilidad','Aleatorio'], c:2},
+    {q:'4. Una heurística es:',
+     o:['Una regla práctica que guía la búsqueda sin garantizar la solución perfecta','Una demostración matemática exacta','Un tipo de sensor','Una base de datos'], c:0},
+    {q:'5. Que un agente sea "racional" significa que:',
+     o:['Nunca comete errores','Conoce toda la información del universo','Elige la mejor acción según lo que percibe y sabe','Actúa siempre al azar'], c:2}
+  ],
+  5: [
+    {q:'1. La diferencia entre dato y conocimiento es que el conocimiento:',
+     o:['Es siempre un número','Permite actuar o deducir a partir de la información','Ocupa menos memoria','No requiere contexto'], c:1},
+    {q:'2. Concluir "Sócrates es mortal" a partir de "todos los humanos son mortales" es razonamiento:',
+     o:['Inductivo','Abductivo','Deductivo','Aleatorio'], c:2},
+    {q:'3. Inferir una regla general a partir de muchos casos particulares es razonamiento:',
+     o:['Deductivo','Inductivo','Circular','Definitivo'], c:1},
+    {q:'4. En la programación lógica, el programador principalmente:',
+     o:['Indica paso a paso cómo calcular todo','Declara hechos y reglas y el sistema deduce','Optimiza el hardware','Diseña la interfaz gráfica'], c:1},
+    {q:'5. Deducir "probablemente llovió" porque el suelo está mojado es razonamiento:',
+     o:['Deductivo','Inductivo','Abductivo','Exacto'], c:2}
+  ],
+  6: [
+    {q:'1. Una red semántica representa el conocimiento como:',
+     o:['Una hoja de cálculo','Un grafo de conceptos (nodos) y relaciones (aristas)','Una lista ordenada','Un único número'], c:1},
+    {q:'2. La herencia en una red semántica permite:',
+     o:['Borrar conceptos automáticamente','Que un concepto reciba propiedades de sus categorías superiores','Cifrar los datos','Acelerar el hardware'], c:1},
+    {q:'3. La unificación es el mecanismo que:',
+     o:['Hace coincidir una consulta con hechos y reglas, hallando valores que la satisfacen','Ordena los datos alfabéticamente','Elimina duplicados','Grafica resultados'], c:0},
+    {q:'4. El backtracking consiste en:',
+     o:['Avanzar siempre sin detenerse','Retroceder cuando un camino falla para probar otro','Guardar todo en memoria','Ejecutar en paralelo'], c:1},
+    {q:'5. Que un sistema concluya "el pingüino vuela" muestra:',
+     o:['Que la inferencia por herencia puede fallar ante excepciones','Que los pingüinos vuelan','Que el sistema no tiene reglas','Que la lógica es inútil'], c:0}
+  ],
+  7: [
+    {q:'1. Una probabilidad de 0 significa que el evento es:',
+     o:['Seguro','Imposible','Muy probable','Aleatorio'], c:1},
+    {q:'2. El Teorema de Bayes sirve para:',
+     o:['Ordenar listas','Actualizar una creencia cuando llega nueva evidencia','Cifrar mensajes','Dibujar grafos'], c:1},
+    {q:'3. En Bayes, la "probabilidad previa" P(A) representa:',
+     o:['La creencia antes de ver la evidencia','El resultado final','Un error de cálculo','La velocidad del sistema'], c:0},
+    {q:'4. Que una prueba muy precisa dé muchos falsos positivos en una enfermedad rara se explica por:',
+     o:['Un error del laboratorio','La baja probabilidad previa del evento','La falta de electricidad','Un virus informático'], c:1},
+    {q:'5. Si la probabilidad de un evento es 0.8, sus momios (Odds) a favor son:',
+     o:['1 a 1','4 a 1','8 a 1','2 a 1'], c:1}
+  ]
+};
+var seleccion = {4:{},5:{},6:{},7:{}};
+
+function construir(n){
+  var cont = document.getElementById('quiz'+n);
+  var preg = quizzes[n];
+  var html = '';
+  for(var i=0;i<preg.length;i++){
+    html += '<div class="pregunta-quiz">';
+    html += '<p class="enunciado">'+preg[i].q+'</p>';
+    for(var j=0;j<preg[i].o.length;j++){
+      html += '<div class="opcion" data-n="'+n+'" data-p="'+i+'" data-o="'+j+'">'+preg[i].o[j]+'</div>';
+    }
+    html += '</div>';
+  }
+  cont.innerHTML = html;
+  reattach();
+}
+function reattach(){
+  var ops = document.querySelectorAll('.opcion');
+  for(var k=0;k<ops.length;k++){
+    ops[k].onclick = function(){
+      var n = this.getAttribute('data-n');
+      var pp = this.getAttribute('data-p');
+      var oo = this.getAttribute('data-o');
+      var hermanas = document.querySelectorAll('.opcion[data-n="'+n+'"][data-p="'+pp+'"]');
+      for(var m=0;m<hermanas.length;m++){ hermanas[m].classList.remove('sel'); }
+      this.classList.add('sel');
+      seleccion[n][pp] = parseInt(oo);
+    };
+  }
+}
+function calificar(n){
+  var preg = quizzes[n];
+  var aciertos = 0;
+  for(var i=0;i<preg.length;i++){
+    var ops = document.querySelectorAll('.opcion[data-n="'+n+'"][data-p="'+i+'"]');
+    for(var j=0;j<ops.length;j++){ ops[j].classList.remove('correcta','incorrecta'); }
+    if(seleccion[n].hasOwnProperty(i)){
+      var elegida = seleccion[n][i];
+      if(elegida === preg[i].c){ aciertos++; ops[elegida].classList.add('correcta'); }
+      else{ ops[elegida].classList.add('incorrecta'); ops[preg[i].c].classList.add('correcta'); }
+    }else{ ops[preg[i].c].classList.add('correcta'); }
+  }
+  var res = document.getElementById('res'+n);
+  var pct = Math.round((aciertos/preg.length)*100);
+  var msg = 'Obtuvo '+aciertos+' de '+preg.length+' aciertos ('+pct+'%). ';
+  res.style.display = 'block';
+  res.classList.remove('ok','medio','bajo');
+  if(aciertos===5){ res.classList.add('ok'); msg+='Excelente dominio del tema.'; }
+  else if(aciertos>=3){ res.classList.add('medio'); msg+='Buen avance; repase las secciones marcadas.'; }
+  else{ res.classList.add('bajo'); msg+='Le recomendamos revisar nuevamente el contenido.'; }
+  res.textContent = msg;
+  res.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function reiniciar(n){
+  seleccion[n] = {};
+  document.getElementById('res'+n).style.display = 'none';
+  construir(n);
+}
+document.addEventListener('DOMContentLoaded', function(){
+  cargarGuardado();
+  construir(4); construir(5); construir(6); construir(7);
+});
+</script>
+</body>
+</html>
